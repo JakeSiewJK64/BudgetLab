@@ -7,11 +7,14 @@
 package com.jakesiewjk64.budgetlab.models;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -23,27 +26,38 @@ public class ExpenseModel {
 	private long id;
 	private String description;
 	private Date date;
-		
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "expenseId")
+	private List<TransactionModel> transaction;
+
+	public List<TransactionModel> getTransaction() {
+		return transaction;
+	}
+
+	public void setTransaction(List<TransactionModel> transaction) {
+		this.transaction = transaction;
+	}
+
 	public long getId() {
 		return id;
 	}
-	
+
 	public void setId(long id) {
 		this.id = id;
 	}
-	
+
 	public String getDescription() {
 		return description;
 	}
-	
+
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
+
 	public Date getDate() {
 		return date;
 	}
-	
+
 	public void setDate(Date date) {
 		this.date = date;
 	}
