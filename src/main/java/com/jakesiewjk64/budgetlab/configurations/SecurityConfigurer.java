@@ -19,7 +19,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.jakesiewjk64.budgetlab.filters.JwtRequestFilter;
-import com.jakesiewjk64.budgetlab.repository.UserRoleRepository;
+import com.jakesiewjk64.budgetlab.repository.UserRoleBridgeRepository;
 
 @EnableWebSecurity
 public class SecurityConfigurer {
@@ -28,7 +28,7 @@ public class SecurityConfigurer {
     private JwtRequestFilter jwtRequestFilter;
 
     @Autowired
-    private UserRoleRepository userRoleRepository;
+    private UserRoleBridgeRepository UserRoleBridgeRepository;
 
     private final String[] PUBLIC_PATHS = new String[] {
             "/auth/**",
@@ -57,8 +57,8 @@ public class SecurityConfigurer {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         
-        String[] admin = userRoleRepository.findRoleByName("Admin");
-        String[] user = userRoleRepository.findRoleByName("User");
+        String[] admin = UserRoleBridgeRepository.findRoleByName("Admin");
+        String[] user = UserRoleBridgeRepository.findRoleByName("User");
 
         http.cors().and().csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()

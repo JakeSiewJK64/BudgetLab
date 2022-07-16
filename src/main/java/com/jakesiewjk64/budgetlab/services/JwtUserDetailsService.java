@@ -21,7 +21,7 @@ import org.springframework.stereotype.Service;
 import com.jakesiewjk64.budgetlab.models.UserModel;
 import com.jakesiewjk64.budgetlab.models.UserToRoleModel;
 import com.jakesiewjk64.budgetlab.repository.UserRepository;
-import com.jakesiewjk64.budgetlab.repository.UserRoleRepository;
+import com.jakesiewjk64.budgetlab.repository.UserRoleBridgeRepository;
 
 @Service
 public class JwtUserDetailsService implements UserDetailsService {
@@ -30,14 +30,14 @@ public class JwtUserDetailsService implements UserDetailsService {
 	private UserRepository userRepository;
 
 	@Autowired
-	private UserRoleRepository userRoleRepository;
+	private UserRoleBridgeRepository UserRoleBridgeRepository;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		UserModel user = userRepository.findUserByUsername(username);
 		List<GrantedAuthority> authorityList = new ArrayList<>();
 
-		List<UserToRoleModel> roles = userRoleRepository.findUserRolesById(user.getId());
+		List<UserToRoleModel> roles = UserRoleBridgeRepository.findUserRolesById(user.getId());
 		for(UserToRoleModel r : roles) {
 			authorityList.add(new SimpleGrantedAuthority(r.getUserRole().getRolehash()));
 		}
