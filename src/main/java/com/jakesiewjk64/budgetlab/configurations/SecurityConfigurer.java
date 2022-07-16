@@ -36,7 +36,7 @@ public class SecurityConfigurer {
     };
 
     private final String[] ADMIN_PATHS = new String[] {
-        "/admindashboard"
+            "/admindashboard"
     };
 
     private final String[] AUTHENTICATED_PATHS = new String[] {
@@ -56,7 +56,7 @@ public class SecurityConfigurer {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        
+
         String[] admin = UserRoleBridgeRepository.findRoleByName("Admin");
         String[] user = UserRoleBridgeRepository.findRoleByName("User");
 
