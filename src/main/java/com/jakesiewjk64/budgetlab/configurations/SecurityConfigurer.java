@@ -26,6 +26,11 @@ public class SecurityConfigurer {
     @Autowired
     private JwtRequestFilter jwtRequestFilter;
 
+    private final String[] PUBLIC_PATHS = new String[] {
+            "/auth/**",
+            "/hello"
+    };
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -42,7 +47,7 @@ public class SecurityConfigurer {
         http.cors().and().csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
-                .antMatchers("/auth/**").permitAll()
+                .antMatchers(PUBLIC_PATHS).permitAll()
                 .anyRequest().authenticated();
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
