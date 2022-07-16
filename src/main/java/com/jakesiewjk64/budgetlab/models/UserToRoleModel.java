@@ -9,11 +9,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+@SuppressWarnings("serial")
 @Entity
 @Table(name = "usertorolebridge")
 public class UserToRoleModel implements Serializable {
 
-    @Id
+	@Id
     private Long id;
 
     private Long userid;
