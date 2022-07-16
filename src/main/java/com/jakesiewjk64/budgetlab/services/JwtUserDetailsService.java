@@ -19,7 +19,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.jakesiewjk64.budgetlab.models.UserModel;
+import com.jakesiewjk64.budgetlab.models.UserToRoleModel;
 import com.jakesiewjk64.budgetlab.repository.UserRepository;
+import com.jakesiewjk64.budgetlab.repository.UserRoleRepository;
 
 @Service
 public class JwtUserDetailsService implements UserDetailsService {
@@ -27,11 +29,18 @@ public class JwtUserDetailsService implements UserDetailsService {
 	@Autowired
 	private UserRepository userRepository;
 
+	@Autowired
+	private UserRoleRepository userRoleRepository;
+
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		UserModel user = userRepository.findUserByUsername(username);
 		List<GrantedAuthority> authorityList = new ArrayList<>();
-		authorityList.add(new SimpleGrantedAuthority("USER_ROLE"));
+
+		List<UserToRoleModel> roles = userRoleRepository.findUserRolesById(user.getId());
+		for(UserToRoleModel r : roles) {
+			authorityList.add(new SimpleGrantedAuthority(r.getUserRole().getRolehash()));
+		}
 		return new User(user.getUsername(), user.getPassword(), authorityList);
 	}
 }

@@ -14,8 +14,6 @@ import java.util.function.Function;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import com.jakesiewjk64.budgetlab.models.UserModel;
-
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -51,17 +49,17 @@ public class JwtTokenUtil {
 		return extractExpiration(token).before(new Date());
 	}
 
-	public String generateToken(UserModel userModel) {
+	public String generateToken(UserDetails userModel) {
 		Map<String, Object> claims = new HashMap<>();
-		claims.put("userid", userModel.getId());
-		claims.put("firstname", userModel.getFirstName());
-		claims.put("lastname", userModel.getLastName());
+		claims.put("username", userModel.getUsername());
+		claims.put("roles", userModel.getAuthorities());
 		return createToken(claims, userModel.getUsername());
 	}
 
 	public String createToken(Map<String, Object> claim, String subject) {
-		return Jwts.builder().setClaims(claim).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis())).setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
-		.signWith(SignatureAlgorithm.HS256, secretKey).compact();
+		return Jwts.builder().setClaims(claim).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
+				.setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
+				.signWith(SignatureAlgorithm.HS256, secretKey).compact();
 	}
 
 	public Boolean validateToken(String token, UserDetails userDetails) {

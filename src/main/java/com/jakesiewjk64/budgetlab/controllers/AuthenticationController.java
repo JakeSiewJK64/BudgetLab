@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,8 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.jakesiewjk64.budgetlab.dto.AuthenticationRequestDto;
 import com.jakesiewjk64.budgetlab.dto.AuthenticationResponseDto;
 import com.jakesiewjk64.budgetlab.dto.ErrorResponseDto;
-import com.jakesiewjk64.budgetlab.models.UserModel;
-import com.jakesiewjk64.budgetlab.repository.UserRepository;
+import com.jakesiewjk64.budgetlab.services.JwtUserDetailsService;
 import com.jakesiewjk64.budgetlab.utils.JwtTokenUtil;
 
 @RestController
@@ -30,7 +30,7 @@ public class AuthenticationController {
 	private AuthenticationManager authenticationManager;
 
 	@Autowired
-	private UserRepository userRepository;
+	private JwtUserDetailsService jwtUserDetailsService;
 
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
@@ -46,7 +46,7 @@ public class AuthenticationController {
 							e.getMessage(),
 							e.toString()));
 		}
-		final UserModel user = userRepository.findUserByUsername(authenticationRequest.getUsername());
+		final UserDetails user = jwtUserDetailsService.loadUserByUsername(authenticationRequest.getUsername());
 		final String jwtToken = jwtTokenUtil.generateToken(user);
 		return ResponseEntity.ok(new AuthenticationResponseDto(jwtToken));
 	}
