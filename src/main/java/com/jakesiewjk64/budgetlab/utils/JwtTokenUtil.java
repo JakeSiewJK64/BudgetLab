@@ -25,15 +25,11 @@ public class JwtTokenUtil {
 
 	private String secretKey = "45F94C61FAC55EAFE98CA5F89151E";
 
-	public int extractUserId(String token) {
-		return (int) extractAllClaims(token).get("userid");
-	}
-
 	public String extractUsername(String token) {
 		return extractClaim(token, Claims::getSubject);
 	}
 
-	public Date extractExpiration(String token) {
+	private Date extractExpiration(String token) {
 		try {
 			return extractClaim(token, Claims::getExpiration);
 		} catch (Exception e) {
@@ -42,21 +38,24 @@ public class JwtTokenUtil {
 		}
 	}
 
-	public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
+	private <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
 		final Claims claim = extractAllClaims(token);
 		return claimsResolver.apply(claim);
 	}
 
-	public Claims extractAllClaims(String token) {
+	private Claims extractAllClaims(String token) {
 		return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
 	}
 
-	public Boolean isTokenExpired(String token) {
+	private Boolean isTokenExpired(String token) {
 		return extractExpiration(token).before(new Date());
 	}
 
 	public String generateToken(UserModel userModel) {
 		Map<String, Object> claims = new HashMap<>();
+		claims.put("userid", userModel.getId());
+		claims.put("firstname", userModel.getFirstName());
+		claims.put("lastname", userModel.getLastName());
 		return createToken(claims, userModel.getUsername());
 	}
 
