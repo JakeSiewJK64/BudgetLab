@@ -6,17 +6,11 @@
 
 package com.jakesiewjk64.budgetlab.utils;
 
-import java.io.Serializable;
-import java.security.Key;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-import org.json.JSONObject;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 

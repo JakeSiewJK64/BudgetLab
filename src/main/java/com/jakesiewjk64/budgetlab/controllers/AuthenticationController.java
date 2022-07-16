@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.jakesiewjk64.budgetlab.dto.AuthenticationRequestDto;
 import com.jakesiewjk64.budgetlab.dto.AuthenticationResponseDto;
+import com.jakesiewjk64.budgetlab.dto.ErrorResponseDto;
 import com.jakesiewjk64.budgetlab.models.UserModel;
 import com.jakesiewjk64.budgetlab.repository.UserRepository;
 import com.jakesiewjk64.budgetlab.utils.JwtTokenUtil;
@@ -40,15 +41,12 @@ public class AuthenticationController {
 			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
 					authenticationRequest.getUsername(), authenticationRequest.getPassword()));
 		} catch (Exception e) {
-			e.printStackTrace();
-			return ResponseEntity.status(403).body(e.getMessage());
+			return ResponseEntity.status(403).body(
+					new ErrorResponseDto(
+							e.getMessage(),
+							e.toString()));
 		}
-
 		final UserModel user = userRepository.findUserByUsername(authenticationRequest.getUsername());
-		if (!user.getPassword().equals(authenticationRequest.getPassword())) {
-			return ResponseEntity.status(403).body("Either your username or password is incorrect!");
-		}
-
 		final String jwtToken = jwtTokenUtil.generateToken(user);
 		return ResponseEntity.ok(new AuthenticationResponseDto(jwtToken));
 	}
