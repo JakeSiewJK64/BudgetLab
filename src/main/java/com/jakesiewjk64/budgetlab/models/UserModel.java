@@ -23,13 +23,23 @@ public class UserModel {
 
 	private String username;
 	private String password;
-	
+
 	@Column(name = "firstname")
 	private String firstName;
-	
+
 	@Column(name = "lastname")
 	private String lastName;
-	
+
+	public UserModel() {
+	}
+
+	public UserModel(UserModel user) {
+		this.username = user.getUsername();
+		this.password = user.getPassword();
+		this.firstName = user.getFirstName();
+		this.lastName = user.getLastName();
+	}
+
 	public String getFirstName() {
 		return firstName;
 	}

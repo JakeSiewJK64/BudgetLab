@@ -30,16 +30,20 @@ public class JwtUserDetailsService implements UserDetailsService {
 	private UserRepository userRepository;
 
 	@Autowired
-	private UserRoleBridgeRepository UserRoleBridgeRepository;
+	private UserRoleBridgeRepository userRoleBridgeRepository;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		UserModel user = userRepository.findUserByUsername(username);
 		List<GrantedAuthority> authorityList = new ArrayList<>();
+		List<UserToRoleModel> roles = userRoleBridgeRepository.findUserRolesById(user.getId());
 
-		List<UserToRoleModel> roles = UserRoleBridgeRepository.findUserRolesById(user.getId());
-		for(UserToRoleModel r : roles) {
-			authorityList.add(new SimpleGrantedAuthority(r.getUserRole().getRolehash()));
+		if (roles.size() == 0) {
+			authorityList.add(new SimpleGrantedAuthority(userRoleBridgeRepository.findRoleByName("User")[0]));
+		} else {
+			for (UserToRoleModel r : roles) {
+				authorityList.add(new SimpleGrantedAuthority(r.getUserRole().getRolehash()));
+			}
 		}
 		return new User(user.getUsername(), user.getPassword(), authorityList);
 	}

@@ -36,7 +36,8 @@ public class SecurityConfigurer {
     };
 
     private final String[] ADMIN_PATHS = new String[] {
-            "/admindashboard"
+            "/admindashboard",
+            "/**"
     };
 
     private final String[] AUTHENTICATED_PATHS = new String[] {
