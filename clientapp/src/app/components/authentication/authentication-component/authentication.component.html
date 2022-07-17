@@ -1,0 +1,15 @@
+<mat-card class="mx-auto m-2 w-50" fxLayout="column">
+    <mat-form-field appearance="outline">
+      <mat-label>Username</mat-label>
+      <input matInput [(ngModel)]="username">
+      <mat-icon matSuffix>person</mat-icon>
+      <mat-hint>Enter Username</mat-hint>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Password</mat-label>
+      <input matInput [(ngModel)]="password">
+      <mat-icon matSuffix>keygen</mat-icon>
+      <mat-hint>Enter Password</mat-hint>
+    </mat-form-field>
+    <button mat-raised-button color="warn" (click)="onclick()">Login</button>
+  </mat-card>
