@@ -12,6 +12,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +27,7 @@ import com.jakesiewjk64.budgetlab.repository.UserRepository;
 import com.jakesiewjk64.budgetlab.services.JwtUserDetailsService;
 import com.jakesiewjk64.budgetlab.utils.JwtTokenUtil;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/auth")
 public class AuthenticationController {
