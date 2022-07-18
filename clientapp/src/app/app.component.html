@@ -1,1 +1,7 @@
+<mat-toolbar>
+    BudgetLabs
+    <div class="ms-auto">
+        <button mat-flat-button color="primary" (click)="redirectToAuth()" *ngIf="!isAuthenticated">Login</button>
+    </div>
+</mat-toolbar>
 <router-outlet></router-outlet>
