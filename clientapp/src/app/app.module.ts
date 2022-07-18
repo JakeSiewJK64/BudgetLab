@@ -5,11 +5,17 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from './shared.module';
 import { AdmindashboardComponent } from './components/admin/admindashboard/admindashboard.component';
-import { NotfoundComponent } from './components/notfound/notfound.component';
+import { NotfoundComponent } from './components/shared/notfound/notfound.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FooterComponent } from './components/shared/footer/footer.component';
 
 @NgModule({
-  declarations: [AppComponent, AdmindashboardComponent, NotfoundComponent],
+  declarations: [
+    AppComponent,
+    AdmindashboardComponent,
+    NotfoundComponent,
+    FooterComponent,
+  ],
   imports: [
     BrowserModule,
     HttpClientModule,

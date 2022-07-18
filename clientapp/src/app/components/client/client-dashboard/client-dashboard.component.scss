@@ -1,0 +1,28 @@
+.top-dashboard-desktop mat-card {
+    width: 250px;
+    height: 100px;
+    margin: 10px;
+    text-align: center;
+}
+
+.top-dashboard-desktop {
+    justify-content: center;
+}
+
+.top-dashboard-mobile mat-card {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+@media only screen and (max-width: 600px) {
+    .top-dashboard-desktop {
+        display: none !important;
+    }
+}
+
+@media only screen and (min-width: 600px) {
+    .top-dashboard-mobile {
+        display: none !important;
+    }
+}

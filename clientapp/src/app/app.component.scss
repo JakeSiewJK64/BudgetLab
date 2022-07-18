@@ -1,0 +1,23 @@
+.sidenav-menuitem {
+    position: absolute;
+    top: 0.75rem;
+}
+
+.mat-sidenav-width {
+    width: 240px;
+}
+
+.side-nav-route {
+    height: 50px;
+    width: 100%;
+}
+
+.side-nav-route:hover {
+    background-color: #dfe6e9;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.appbar-icon:hover {
+    cursor: pointer;
+}

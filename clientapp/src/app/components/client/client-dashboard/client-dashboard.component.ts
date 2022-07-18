@@ -10,6 +10,24 @@ import { ExpenditureService } from 'src/app/services/expenditure.service';
 export class ClientDashboardComponent implements AfterViewInit {
   constructor(private expenseService: ExpenditureService) {}
 
+  dashboard_cards = [
+    {
+      title: 'Total Spending for this month:',
+      value: 980,
+      bgColor: '#f1c40f',
+    },
+    {
+      title: 'Total Spending for this week',
+      value: 980,
+      bgColor: '#fdcb6e',
+    },
+    {
+      title: 'Total Spending for today:',
+      value: 980,
+      bgColor: '#fab1a0',
+    },
+  ];
+
   expenses: ExpenseDto[] = [];
 
   ngAfterViewInit(): void {

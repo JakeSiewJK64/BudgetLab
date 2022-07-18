@@ -1,8 +1,22 @@
 <mat-toolbar>
+    <mat-icon (click)="sidenav.toggle()" class="appbar-icon">menu</mat-icon>
     BudgetLabs
     <div class="ms-auto">
         <button mat-flat-button color="primary" (click)="redirectToAuth()" *ngIf="!isAuthenticated">Login</button>
         <button mat-flat-button color="warn" (click)="logout()" *ngIf="isAuthenticated">Logout</button>
     </div>
 </mat-toolbar>
-<router-outlet></router-outlet>
+<mat-sidenav-container [hasBackdrop]="false" class="h-100">
+    <mat-sidenav #sidenav mode="side" opened class="mat-sidenav-width">
+        <div *ngFor="let route of routes">
+            <div class="side-nav-route w-100" matRipple>
+                <mat-icon class="m-2">{{route.icon}}</mat-icon>
+                <strong class="mb-auto sidenav-menuitem">{{ route.name }}</strong>
+            </div>
+        </div>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <router-outlet></router-outlet>
+    </mat-sidenav-content>
+</mat-sidenav-container>
+<app-footer></app-footer>

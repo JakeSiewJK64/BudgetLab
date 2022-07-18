@@ -1,8 +1,32 @@
 <div class="m-2">
     <h1>My BudgetLab Dashboard</h1>
-    <mat-card *ngFor="let expense of expenses">
+    <div class="top-dashboard-desktop" fxLayout="row" fxAlign="center">
+        <div *ngFor="let item of dashboard_cards">
+            <mat-card class="mat-elevation-z0" [style.background]="item.bgColor">
+                <h3 mat-card-title>
+                    <strong>{{ item.title }}</strong>
+                </h3>
+                <h4>{{item.value}}</h4>
+            </mat-card>
+        </div>
+    </div>
+    <div class="top-dashboard-mobile" fxLayout="column" fxAlign="center">
+        <mat-card>
+            <h3 mat-card-title>Total Spending for this month:</h3>
+            <h4>980</h4>
+        </mat-card>
+        <mat-card>
+            <h3 mat-card-title>Total Spending this week:</h3>
+            <h4>980</h4>
+        </mat-card>
+        <mat-card>
+            <h3 mat-card-title>Total Spending today:</h3>
+            <h4>980</h4>
+        </mat-card>
+    </div>
+    <mat-card *ngFor="let expense of expenses" class="mat-elevation-z0">
         <h2>{{expense.description}}</h2>
-        <mat-card class="mat-elevation-z" *ngFor="let transaction of expense.transaction">
+        <mat-card *ngFor="let transaction of expense.transaction">
             <div fxLayout="row">
                 <p>{{ transaction.name }}:</p>
                 <strong>{{ transaction.amount }}</strong>

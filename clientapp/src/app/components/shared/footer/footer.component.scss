@@ -1,0 +1,10 @@
+.footer-container {
+    background-color: #dfe6e9;
+    height: 5vw;
+}
+
+@media only screen and (max-width: 600px) {
+    .footer-container {
+        height: 100px;
+    }
+}

@@ -8,9 +8,13 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatRippleModule } from '@angular/material/core';
 
 @NgModule({
   exports: [
+    MatSidenavModule,
+    MatRippleModule,
     FlexLayoutModule,
     MatButtonModule,
     MatCardModule,
