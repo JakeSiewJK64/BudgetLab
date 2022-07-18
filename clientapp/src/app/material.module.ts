@@ -7,12 +7,14 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @NgModule({
   exports: [
     FlexLayoutModule,
     MatButtonModule,
     MatCardModule,
+    MatToolbarModule,
     MatFormFieldModule,
     MatSlideToggleModule,
     MatInputModule,

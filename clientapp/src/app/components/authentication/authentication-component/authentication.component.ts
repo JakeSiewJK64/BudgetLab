@@ -9,9 +9,8 @@ import { BugetLabServiceService } from 'src/app/services/buget-lab-service.servi
 })
 export class AuthenticationComponent implements OnInit {
   constructor(private budgetLabService: BugetLabServiceService) {}
-  
-  ngOnInit(): void {
-  }
+
+  ngOnInit(): void {}
 
   username: string = '';
   password: string = '';
@@ -20,7 +19,7 @@ export class AuthenticationComponent implements OnInit {
     this.budgetLabService
       .authenticate(new AuthenticationRequestDto(this.username, this.password))
       .subscribe((x) => {
-        console.log(x);
+        localStorage.setItem('token', x.jwt.toString());
       });
   }
 }

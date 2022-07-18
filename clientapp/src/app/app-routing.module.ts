@@ -1,12 +1,19 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AdmindashboardComponent } from './components/admin/admindashboard/admindashboard.component';
 import { NotfoundComponent } from './components/notfound/notfound.component';
 
 export const routes: Routes = [
   {
-    path: 'admin',
-    component: AdmindashboardComponent,
+    path: 'auth',
+    loadChildren: () =>
+      import('./components/authentication/authentication.module').then(
+        (x) => x.AuthenticationModule
+      ),
+  },
+  {
+    path: 'client',
+    loadChildren: () =>
+      import('./components/client/client.module').then((x) => x.ClientModule),
   },
   {
     path: '**',
