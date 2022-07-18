@@ -16,6 +16,11 @@ export class BugetLabServiceService {
     }),
   };
 
+  validateExpiry(requestJwt: String): Observable<Boolean> {
+    let url = 'http://localhost:8080/auth/validateTokenExpiry/' + requestJwt;
+    return this.http.post<Boolean>(url, null, this.httpOptions);
+  }
+
   authenticate(
     requestBody: AuthenticationRequestDto
   ): Observable<AuthenticationResponseDto> {

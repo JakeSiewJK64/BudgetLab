@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationRequestDto } from 'src/app/models/AuthenticationRequestDto';
 import { BugetLabServiceService } from 'src/app/services/buget-lab-service.service';
@@ -9,18 +9,26 @@ import { PostAuthenticateService } from 'src/app/services/ResultsService/post-au
   templateUrl: './authentication.component.html',
   styleUrls: ['./authentication.component.scss'],
 })
-export class AuthenticationComponent implements OnInit {
+export class AuthenticationComponent implements AfterViewInit {
   constructor(
     private budgetLabService: BugetLabServiceService,
     private router: Router,
     private postAuthEmitter: PostAuthenticateService
   ) {}
 
-  isAuthenticated: Boolean = localStorage.getItem('token') == null;
   username: string = '';
   password: string = '';
 
-  ngOnInit(): void {}
+  jwt = localStorage.getItem('token');
+  ngAfterViewInit(): void {
+    this.budgetLabService
+      .validateExpiry(this.jwt != null ? this.jwt : '')
+      .subscribe((x) => {
+        if (!x) {
+          this.router.navigateByUrl('/client/dashboard');
+        }
+      });
+  }
 
   onclick() {
     this.budgetLabService
