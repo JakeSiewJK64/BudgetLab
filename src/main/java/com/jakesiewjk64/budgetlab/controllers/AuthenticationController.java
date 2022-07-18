@@ -13,6 +13,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,6 +51,15 @@ public class AuthenticationController {
 	private void authenticateUser(String username, String password) throws Exception {
 		authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
 				username, password));
+	}
+
+	@PostMapping("/validateTokenExpiry/{token}")
+	public ResponseEntity<?> validateToken(@PathVariable String token) {
+		try {
+			return ResponseEntity.ok(jwtTokenUtil.isTokenExpired(token));
+		} catch (Exception e) {
+			return ResponseEntity.status(403).body(new ErrorResponseDto(e.getMessage(), e.toString()));
+		}
 	}
 
 	@PostMapping("/register")
