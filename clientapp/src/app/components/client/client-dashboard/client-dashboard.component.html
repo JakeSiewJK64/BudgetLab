@@ -1,1 +1,12 @@
-<p>client-dashboard works!</p>
+<div class="m-2">
+    <h1>My BudgetLab Dashboard</h1>
+    <mat-card *ngFor="let expense of expenses">
+        <h2>{{expense.description}}</h2>
+        <mat-card class="mat-elevation-z" *ngFor="let transaction of expense.transaction">
+            <div fxLayout="row">
+                <p>{{ transaction.name }}:</p>
+                <strong>{{ transaction.amount }}</strong>
+            </div>
+        </mat-card>
+    </mat-card>
+</div>

@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationRequestDto } from 'src/app/models/AuthenticationRequestDto';
-import { BugetLabServiceService } from 'src/app/services/buget-lab-service.service';
+import { BugetLabServiceService } from 'src/app/services/buget-lab.service';
 import { PostAuthenticateService } from 'src/app/services/ResultsService/post-authenticate-result.service';
 
 @Component({
@@ -21,13 +21,15 @@ export class AuthenticationComponent implements AfterViewInit {
 
   jwt = localStorage.getItem('token');
   ngAfterViewInit(): void {
-    this.budgetLabService
-      .validateExpiry(this.jwt != null ? this.jwt : '')
-      .subscribe((x) => {
-        if (!x) {
-          this.router.navigateByUrl('/client/dashboard');
-        }
-      });
+    if (this.jwt != null) {
+      this.budgetLabService
+        .validateExpiry(this.jwt != null ? this.jwt : '')
+        .subscribe((x) => {
+          if (!x) {
+            this.router.navigateByUrl('/client/dashboard');
+          }
+        });
+    }
   }
 
   onclick() {

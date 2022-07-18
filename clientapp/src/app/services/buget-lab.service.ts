@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthenticationRequestDto } from '../models/AuthenticationRequestDto';
 import { AuthenticationResponseDto } from '../models/AuthenticationResponseDto';
+import { URL_ENDPOINT } from './endpoint.constant';
 
 @Injectable({
   providedIn: 'root',
@@ -17,14 +18,14 @@ export class BugetLabServiceService {
   };
 
   validateExpiry(requestJwt: String): Observable<Boolean> {
-    let url = 'http://localhost:8080/auth/validateTokenExpiry/' + requestJwt;
+    let url = `${URL_ENDPOINT}/auth/validateTokenExpiry/` + requestJwt;
     return this.http.post<Boolean>(url, null, this.httpOptions);
   }
 
   authenticate(
     requestBody: AuthenticationRequestDto
   ): Observable<AuthenticationResponseDto> {
-    let url = 'http://localhost:8080/auth/authenticate';
+    let url = `${URL_ENDPOINT}/auth/authenticate`;
     return this.http.post<AuthenticationResponseDto>(
       url,
       requestBody,

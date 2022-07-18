@@ -8,8 +8,20 @@ import { PostAuthenticateService } from './services/ResultsService/post-authenti
 })
 export class AppComponent implements AfterViewInit {
   isAuthenticated: Boolean = localStorage.getItem('token') != null;
+  redirectRoute: string = '/auth/authenticate';
 
-  constructor(private router: Router, private auth: PostAuthenticateService) {}
+  constructor(
+    private router: Router,
+    private auth: PostAuthenticateService,
+    private postAuth: PostAuthenticateService
+  ) {}
+
+  logout() {
+    localStorage.removeItem('token');
+    this.redirectToAuth();
+    this.postAuth.emitLoggedIn();
+  }
+
   ngAfterViewInit(): void {
     this.auth.getLoggedIn().subscribe((x) => {
       this.isAuthenticated = x;
@@ -17,6 +29,6 @@ export class AppComponent implements AfterViewInit {
   }
 
   redirectToAuth() {
-    this.router.navigateByUrl('/auth/authenticate');
+    this.router.navigateByUrl(this.redirectRoute);
   }
 }

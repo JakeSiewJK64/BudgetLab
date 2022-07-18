@@ -5,9 +5,7 @@ import { ClientDashboardComponent } from './client-dashboard/client-dashboard.co
 const routes: Routes = [
   { path: 'dashboard', component: ClientDashboardComponent },
 ];
-
 @NgModule({
-  declarations: [ClientDashboardComponent],
   imports: [RouterModule.forChild(routes)],
 })
 export class ClientRoutingModule {}
