@@ -61,4 +61,12 @@ public class ExpenseModel {
 	public void setDate(Date date) {
 		this.date = date;
 	}
+
+	public Float getTotal() {
+        float totalVal = 0;
+        for (TransactionModel transaction : this.transaction) {
+            totalVal += transaction.getAmount();
+        }
+        return totalVal;
+    }
 }
