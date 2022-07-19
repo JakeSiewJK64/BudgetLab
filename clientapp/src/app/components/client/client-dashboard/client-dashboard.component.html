@@ -11,26 +11,31 @@
         </div>
     </div>
     <div class="top-dashboard-mobile" fxLayout="column" fxAlign="center">
-        <mat-card>
-            <h3 mat-card-title>Total Spending for this month:</h3>
-            <h4>980</h4>
-        </mat-card>
-        <mat-card>
-            <h3 mat-card-title>Total Spending this week:</h3>
-            <h4>980</h4>
-        </mat-card>
-        <mat-card>
-            <h3 mat-card-title>Total Spending today:</h3>
-            <h4>980</h4>
-        </mat-card>
+        <div *ngFor="let item of dashboard_cards">
+            <mat-card class="mat-elevation-z0" [style.background]="item.bgColor">
+                <h3 mat-card-title>
+                    <strong>{{ item.title }}</strong>
+                </h3>
+                <h4>{{item.value}}</h4>
+            </mat-card>
+        </div>
     </div>
-    <mat-card *ngFor="let expense of expenses" class="mat-elevation-z0">
-        <h2>{{expense.description}}</h2>
-        <mat-card *ngFor="let transaction of expense.transaction">
-            <div fxLayout="row">
-                <p>{{ transaction.name }}:</p>
-                <strong>{{ transaction.amount }}</strong>
-            </div>
-        </mat-card>
-    </mat-card>
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z0 w-100">
+        <ng-container matColumnDef="Description">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by description">
+                Description
+            </th>
+            <td mat-cell *matCellDef="let expense"> {{expense.description}} </td>
+        </ng-container>
+        <ng-container matColumnDef="Date">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by date">
+                Date
+            </th>
+            <td mat-cell *matCellDef="let expense"> {{expense.date}} </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[2, 5, 10, 20]" showFirstLastButtons>
+    </mat-paginator>
 </div>

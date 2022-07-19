@@ -1,9 +1,11 @@
-import { AfterViewInit, Component } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { ExpenseDto } from 'src/app/models/ExpenseDto';
 import { ExpenditureService } from 'src/app/services/expenditure.service';
 import { PostAuthenticateService } from 'src/app/services/ResultsService/post-authenticate-result.service';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-client-dashboard',
@@ -17,6 +19,11 @@ export class ClientDashboardComponent implements AfterViewInit {
     private router: Router,
     private postAuthService: PostAuthenticateService
   ) {}
+
+  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
+  displayedColumns: string[] = ['Description', 'Date'];
 
   dashboard_cards = [
     {
@@ -36,13 +43,15 @@ export class ClientDashboardComponent implements AfterViewInit {
     },
   ];
 
-  expenses: ExpenseDto[] = [];
+  dataSource = new MatTableDataSource();
 
   ngAfterViewInit(): void {
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
     if (localStorage.getItem('token') != null) {
       this.expenseService.getExpenses().subscribe({
         next: (x) => {
-          this.expenses = x;
+          this.dataSource.data = x;
         },
         error: () => {
           this._snackbar

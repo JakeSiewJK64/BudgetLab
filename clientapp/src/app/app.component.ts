@@ -19,23 +19,18 @@ export class AppComponent implements AfterViewInit {
     },
     {
       path: '',
-      name: 'Option 1',
-      icon: 'delete',
+      name: 'My Expenditure',
+      icon: 'money',
     },
     {
       path: '',
-      name: 'Option 2',
-      icon: 'favorite',
+      name: 'Create Entity',
+      icon: 'groups',
     },
     {
       path: '',
-      name: 'Option 3',
+      name: 'Settings',
       icon: 'settings',
-    },
-    {
-      path: '',
-      name: 'Option 4',
-      icon: 'key',
     },
   ];
 

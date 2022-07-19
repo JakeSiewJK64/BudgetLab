@@ -11,9 +11,15 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatRippleModule } from '@angular/material/core';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   exports: [
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
     MatSidenavModule,
     MatSnackBarModule,
     MatRippleModule,
