@@ -6,6 +6,10 @@ import { PostAuthenticateService } from 'src/app/services/ResultsService/post-au
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatDialog } from '@angular/material/dialog';
+
+import { ExpenseDialogComponent } from '../_dialog/expense-dialog/expense-dialog.component';
+import { ExpenseDto } from 'src/app/models/ExpenseDto';
 
 @Component({
   selector: 'app-client-dashboard',
@@ -15,6 +19,7 @@ import { MatPaginator } from '@angular/material/paginator';
 export class ClientDashboardComponent implements AfterViewInit {
   constructor(
     private expenseService: ExpenditureService,
+    private _dialog: MatDialog,
     private _snackbar: MatSnackBar,
     private router: Router,
     private postAuthService: PostAuthenticateService
@@ -23,7 +28,7 @@ export class ClientDashboardComponent implements AfterViewInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  displayedColumns: string[] = ['Description', 'Date'];
+  displayedColumns: string[] = ['Description', 'Date', 'Total'];
 
   dashboard_cards = [
     {
@@ -44,6 +49,14 @@ export class ClientDashboardComponent implements AfterViewInit {
   ];
 
   dataSource = new MatTableDataSource();
+
+  onTableRowClick(expense: ExpenseDto) {
+    this._dialog.open(ExpenseDialogComponent, {
+      width: '800px',
+      data: expense,
+      disableClose: true,
+    });
+  }
 
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;

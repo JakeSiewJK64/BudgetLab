@@ -24,6 +24,11 @@ export class AppComponent implements AfterViewInit {
     },
     {
       path: '',
+      name: 'My Transactions',
+      icon: 'receipt_long',
+    },
+    {
+      path: '',
       name: 'Create Entity',
       icon: 'groups',
     },
