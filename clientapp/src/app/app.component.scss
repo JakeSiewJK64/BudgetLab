@@ -18,6 +18,12 @@
     transition: .3s;
 }
 
+.side-nav-route-active {
+    height: 50px;
+    width: 100%;
+    border-right: 5px solid #e74c3c;
+}
+
 .appbar-icon:hover {
     cursor: pointer;
 }

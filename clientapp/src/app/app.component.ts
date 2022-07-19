@@ -13,27 +13,32 @@ export class AppComponent implements AfterViewInit {
 
   routes = [
     {
-      path: '',
+      path: '/client/dashboard',
+      name: 'Dashboard',
+      icon: 'home',
+    },
+    {
+      path: '/client/account',
       name: 'Account',
       icon: 'person',
     },
     {
-      path: '',
+      path: '/client/expense',
       name: 'My Expenditure',
       icon: 'money',
     },
     {
-      path: '',
+      path: '/client/transaction',
       name: 'My Transactions',
       icon: 'receipt_long',
     },
     {
-      path: '',
+      path: '/client/entity',
       name: 'Create Entity',
       icon: 'groups',
     },
     {
-      path: '',
+      path: '/client/settings',
       name: 'Settings',
       icon: 'settings',
     },
@@ -45,6 +50,10 @@ export class AppComponent implements AfterViewInit {
     private auth: PostAuthenticateService,
     private postAuth: PostAuthenticateService
   ) {}
+
+  onClickRoute(routePath: string) {
+    this.router.navigateByUrl(routePath);
+  }
 
   toggleSideNav() {
     this.sidenav.toggle();

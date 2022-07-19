@@ -9,7 +9,8 @@
 <mat-sidenav-container [hasBackdrop]="false" class="h-100">
     <mat-sidenav *ngIf="isAuthenticated" #sidenav mode="side" opened class="mat-sidenav-width">
         <div *ngFor="let route of routes">
-            <div class="side-nav-route w-100" matRipple>
+            <div class="side-nav-route w-100" [routerLink]="route.path" routerLinkActive="side-nav-route-active"
+                matRipple>
                 <mat-icon class="m-2">{{route.icon}}</mat-icon>
                 <strong class="mb-auto sidenav-menuitem">{{ route.name }}</strong>
             </div>
