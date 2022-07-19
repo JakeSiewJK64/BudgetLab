@@ -10,14 +10,13 @@ import { URL_ENDPOINT } from './endpoint.constant';
 export class ExpenditureService {
   constructor(private http: HttpClient) {}
 
-  private token = localStorage.getItem('token');
-
   getExpenses(): Observable<ExpenseDto[]> {
+    const token = localStorage.getItem('token');
     var url = `${URL_ENDPOINT}/expense/getExpenses`;
     var httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        Authorization: this.token != null ? `Bearer ${this.token}` : '',
+        Authorization: token != null ? `Bearer ${token}` : '',
       }),
     };
     return this.http.get<ExpenseDto[]>(url, httpOptions);

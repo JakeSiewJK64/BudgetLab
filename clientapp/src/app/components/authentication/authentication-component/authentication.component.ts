@@ -40,27 +40,20 @@ export class AuthenticationComponent implements AfterViewInit {
       .subscribe({
         next: (x) => {
           localStorage.setItem('token', x.jwt.toString());
-          this.postAuthService.emitLoggedIn();
           if (x.jwt != null || x.jwt != '') {
+            this.postAuthService.emitLoggedIn();
             this.router.navigateByUrl('/client/dashboard');
           }
         },
         error: () => {
-          this._snackbar
-            .open(
-              'Either your password or username is incorrect. Please sign in again!',
-              'OK',
-              {
-                horizontalPosition: 'right',
-                verticalPosition: 'bottom',
-              }
-            )
-            .afterDismissed()
-            .subscribe((x) => {
-              localStorage.removeItem('token');
-              this.router.navigateByUrl('/auth/authenticate');
-              this.postAuthService.emitLoggedIn();
-            });
+          this._snackbar.open(
+            'Either your password or username is incorrect. Please sign in again!',
+            'OK',
+            {
+              horizontalPosition: 'right',
+              verticalPosition: 'bottom',
+            }
+          );
         },
       });
   }

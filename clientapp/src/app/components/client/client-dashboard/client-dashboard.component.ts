@@ -39,23 +39,29 @@ export class ClientDashboardComponent implements AfterViewInit {
   expenses: ExpenseDto[] = [];
 
   ngAfterViewInit(): void {
-    this.expenseService.getExpenses().subscribe({
-      next: (x) => {
-        this.expenses = x;
-      },
-      error: () => {
-        this._snackbar
-          .open('Unable to fetch expenses. Please click OK to sign in again!', 'OK', {
-            horizontalPosition: 'right',
-            verticalPosition: 'bottom',
-          })
-          .afterDismissed()
-          .subscribe((x) => {
-            localStorage.removeItem('token');
-            this.router.navigateByUrl('/auth/authenticate');
-            this.postAuthService.emitLoggedIn();
-          });
-      },
-    });
+    if (localStorage.getItem('token') != null) {
+      this.expenseService.getExpenses().subscribe({
+        next: (x) => {
+          this.expenses = x;
+        },
+        error: () => {
+          this._snackbar
+            .open(
+              'Unable to fetch expenses. Please click OK to sign in again!',
+              'OK',
+              {
+                horizontalPosition: 'right',
+                verticalPosition: 'bottom',
+              }
+            )
+            .afterDismissed()
+            .subscribe((x) => {
+              localStorage.removeItem('token');
+              this.router.navigateByUrl('/auth/authenticate');
+              this.postAuthService.emitLoggedIn();
+            });
+        },
+      });
+    }
   }
 }
