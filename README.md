@@ -1,10 +1,13 @@
 # BudgetLab Backend with Spring Boot using JDK 17
 
+### What is BudgetLab?
+BudgetLab is a project that aims to create a web application system to help keep track of your expenditure. Currently, the project is still work in progress. The system uses Spring Boot 2.7.1 as Backend and Angular 14 as frontend.
+
 [![Build Status](https://travis-ci.org/codecentric/springboot-sample-app.svg?branch=master)](https://travis-ci.org/codecentric/springboot-sample-app)
 [![Coverage Status](https://coveralls.io/repos/github/codecentric/springboot-sample-app/badge.svg?branch=master)](https://coveralls.io/github/codecentric/springboot-sample-app?branch=master)
 [![License](http://img.shields.io/:license-apache-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
 
-Minimal [Spring Boot](http://projects.spring.io/spring-boot/) sample app.
+Minimal [Spring Boot](http://projects.spring.io/spring-boot/) app.
 
 ## Requirements
 
