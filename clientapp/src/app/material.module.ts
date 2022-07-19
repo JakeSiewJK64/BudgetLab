@@ -10,10 +10,12 @@ import { FormsModule } from '@angular/forms';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatRippleModule } from '@angular/material/core';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   exports: [
     MatSidenavModule,
+    MatSnackBarModule,
     MatRippleModule,
     FlexLayoutModule,
     MatButtonModule,

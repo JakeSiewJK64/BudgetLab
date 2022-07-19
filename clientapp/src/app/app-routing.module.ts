@@ -16,6 +16,11 @@ export const routes: Routes = [
       import('./components/client/client.module').then((x) => x.ClientModule),
   },
   {
+    path: '',
+    redirectTo: 'client/dashboard',
+    pathMatch: 'full',
+  },
+  {
     path: '**',
     component: NotfoundComponent,
   },

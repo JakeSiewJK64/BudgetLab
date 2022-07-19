@@ -39,15 +39,15 @@ export class AppComponent implements AfterViewInit {
     },
   ];
 
-  @ViewChild('sidenav') private sidenav: MatSidenav;
+  @ViewChild('sidenav') sidenav: MatSidenav;
   constructor(
     private router: Router,
     private auth: PostAuthenticateService,
     private postAuth: PostAuthenticateService
   ) {}
 
-  closeSideNav() {
-    this.sidenav.close();
+  toggleSideNav() {
+    this.sidenav.toggle();
   }
 
   logout() {
