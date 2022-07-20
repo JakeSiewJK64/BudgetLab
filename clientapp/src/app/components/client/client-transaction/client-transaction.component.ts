@@ -25,8 +25,6 @@ export class ClientTransactionComponent implements AfterViewInit {
     }
     const isAsc = sort.direction === 'asc';
     this.dataSource.data = this.dataSource.data.slice().sort((a, b) => {
-      console.log(sort);
-      
       switch (sort.active) {
         case 'name':
           return this._dataService.compare(a.name, b.name, isAsc);

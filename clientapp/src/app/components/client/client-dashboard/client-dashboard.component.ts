@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, NgZone, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { ExpenditureService } from 'src/app/services/expenditure.service';
@@ -10,6 +10,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ExpenseDialogComponent } from '../_dialog/expense-dialog/expense-dialog.component';
 import { ExpenseDto } from 'src/app/models/ExpenseDto';
 import { DataService } from 'src/app/services/data.service';
+import { ClientDashboardDto } from 'src/app/models/ClientDashboardDto';
 
 @Component({
   selector: 'app-client-dashboard',
@@ -22,30 +23,19 @@ export class ClientDashboardComponent implements AfterViewInit {
     private expenseService: ExpenditureService,
     private _dialog: MatDialog,
     private _snackbar: MatSnackBar,
+    private ngZone: NgZone,
     private router: Router,
     private postAuthService: PostAuthenticateService
   ) {}
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   displayedColumns: string[] = ['Description', 'Date', 'Total'];
+  totalSpendingToday = 0;
+  totalSpendingThisYear = 0;
+  totalSpendingThisMonth = 0;
+  isLoading = true;
 
-  dashboard_cards = [
-    {
-      title: 'Total Spending for this month:',
-      value: 980,
-      bgColor: '#f1c40f',
-    },
-    {
-      title: 'Total Spending for this week',
-      value: 980,
-      bgColor: '#fdcb6e',
-    },
-    {
-      title: 'Total Spending for today:',
-      value: 980,
-      bgColor: '#fab1a0',
-    },
-  ];
+  dashboard_cards: ClientDashboardDto[] = [];
 
   dataSource = new MatTableDataSource<ExpenseDto>();
 
@@ -77,32 +67,80 @@ export class ClientDashboardComponent implements AfterViewInit {
     });
   }
 
+  getDashboardValues() {
+    this.dataSource.data.forEach((x) => {
+      // get today
+      if (
+        this.dataService.pipeDate(new Date()) ==
+        this.dataService.pipeDate(x.date)
+      ) {
+        this.totalSpendingToday += x.total;
+      }
+
+      // get today
+      if (
+        this.dataService.pipeDateMonth(new Date()) ==
+        this.dataService.pipeDateMonth(x.date)
+      ) {
+        this.totalSpendingThisMonth += x.total;
+      }
+
+      // get this year
+      if (
+        this.dataService.pipeDateYear(new Date()) ==
+        this.dataService.pipeDateYear(x.date)
+      ) {
+        this.totalSpendingThisYear += x.total;
+      }
+    });
+    this.dashboard_cards = [
+      {
+        title: 'Total Spending for this month:',
+        value: this.totalSpendingThisMonth,
+        bgColor: '#f1c40f',
+      },
+      {
+        title: 'Total Spending for this year',
+        value: this.totalSpendingThisYear,
+        bgColor: '#fdcb6e',
+      },
+      {
+        title: 'Total Spending for today:',
+        value: this.totalSpendingToday,
+        bgColor: '#fab1a0',
+      },
+    ];
+
+    this.isLoading = false;
+  }
+
   ngAfterViewInit(): void {
-    if (localStorage.getItem('token') != null) {
-      this.expenseService.getExpenses().subscribe({
-        next: (x) => {
-          this.dataSource = new MatTableDataSource(x);
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.data = x;
-        },
-        error: () => {
-          this._snackbar
-            .open(
-              'Unable to fetch expenses. Please click OK to sign in again!',
-              'OK',
-              {
-                horizontalPosition: 'right',
-                verticalPosition: 'bottom',
-              }
-            )
-            .afterDismissed()
-            .subscribe((x) => {
-              localStorage.removeItem('token');
-              this.router.navigateByUrl('/auth/authenticate');
-              this.postAuthService.emitLoggedIn();
-            });
-        },
-      });
-    }
+    this.expenseService.getExpenses().subscribe({
+      next: (x) => {
+        this.dataSource = new MatTableDataSource(x);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.data = x;
+        this.ngZone.run(() => {
+          this.getDashboardValues();
+        });
+      },
+      error: () => {
+        this._snackbar
+          .open(
+            'Unable to fetch expenses. Please click OK to sign in again!',
+            'OK',
+            {
+              horizontalPosition: 'right',
+              verticalPosition: 'bottom',
+            }
+          )
+          .afterDismissed()
+          .subscribe((x) => {
+            localStorage.removeItem('token');
+            this.router.navigateByUrl('/auth/authenticate');
+            this.postAuthService.emitLoggedIn();
+          });
+      },
+    });
   }
 }

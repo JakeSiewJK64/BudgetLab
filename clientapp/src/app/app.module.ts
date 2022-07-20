@@ -8,6 +8,7 @@ import { AdmindashboardComponent } from './components/admin/admindashboard/admin
 import { NotfoundComponent } from './components/shared/notfound/notfound.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FooterComponent } from './components/shared/footer/footer.component';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { FooterComponent } from './components/shared/footer/footer.component';
     SharedModule,
     BrowserAnimationsModule,
   ],
+  providers: [DatePipe],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
