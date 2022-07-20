@@ -7,7 +7,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 
-import { ExpenseDialogComponent } from '../_dialog/expense-dialog/expense-dialog.component';
+import { ExpenseDialogComponent } from './expense-dialog/expense-dialog.component';
 import { ExpenseDto } from 'src/app/models/ExpenseDto';
 import { DataService } from 'src/app/services/data.service';
 import { ClientDashboardDto } from 'src/app/models/ClientDashboardDto';
