@@ -1,0 +1,26 @@
+<h1 mat-dialog-title>
+    <strong>{{ data != null ? 'Update' : 'Add' }} Transaction</strong>
+</h1>
+<div mat-dialog-content fxLayout="row" fxLayoutGap="5">
+    <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Subject</mat-label>
+        <input type="text" matInput [(ngModel)]="subject">
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Amount</mat-label>
+        <input type="number" matInput [(ngModel)]="amount">
+    </mat-form-field>
+</div>
+<mat-form-field appearance="outline" class="w-100">
+    <mat-label>Select Expense</mat-label>
+    <mat-select value="{{selected}}">
+        <div *ngFor="let expense of expensesList">
+            <mat-option value="{{expense.id}}">{{ expense.description }}</mat-option>
+        </div>
+    </mat-select>
+</mat-form-field>
+<div mat-dialog-actions class="justify-content-end">
+    <button mat-stroked-button (click)="closeDialog()">Dismiss</button>
+    <button mat-flat-button color="warn" (click)="save()" disabled="{{ subject == '' }}">{{ data != null ? 'Update' :
+        'Add' }} Transaction</button>
+</div>

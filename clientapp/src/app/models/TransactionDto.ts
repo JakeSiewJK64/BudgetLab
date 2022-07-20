@@ -4,8 +4,9 @@ export class TransactionDto {
   expenseId: number;
   name: string;
 
-  constructor(name: string, amount: number) {
+  constructor(name: string, amount: number, expenseId: number, id: number) {
     this.name = name;
-    this.amount = amount;
+    (this.id = id), (this.amount = amount);
+    this.expenseId = expenseId;
   }
 }

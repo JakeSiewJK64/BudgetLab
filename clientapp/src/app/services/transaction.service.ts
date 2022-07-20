@@ -9,6 +9,22 @@ import { URL_ENDPOINT } from './endpoint.constant';
 })
 export class TransactionService {
   constructor(private http: HttpClient) {}
+
+  upsertTransaction(transaction: TransactionDto): Observable<number> {
+    const token = localStorage.getItem('token');
+    var httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: token != null ? `Bearer ${token}` : '',
+      }),
+    };
+    return this.http.post<any>(
+      `${URL_ENDPOINT}/transaction/upsertTransaction`,
+      transaction,
+      httpOptions
+    );
+  }
+
   getTransactions(): Observable<TransactionDto[]> {
     const token = localStorage.getItem('token');
     var httpOptions = {

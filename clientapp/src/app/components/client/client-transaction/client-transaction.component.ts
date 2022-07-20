@@ -1,8 +1,10 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { TransactionDto } from 'src/app/models/TransactionDto';
 import { DataService } from 'src/app/services/data.service';
 import { TransactionService } from 'src/app/services/transaction.service';
+import { TransactionEditorComponent } from './transaction-editor/transaction-editor.component';
 
 @Component({
   selector: 'app-client-transaction',
@@ -12,12 +14,36 @@ import { TransactionService } from 'src/app/services/transaction.service';
 export class ClientTransactionComponent implements AfterViewInit {
   constructor(
     private transactionService: TransactionService,
+    private _dialogRef: MatDialog,
     private _dataService: DataService
   ) {}
   dataSource = new MatTableDataSource<TransactionDto>();
   displayedColumns = ['name', 'amount'];
 
-  onTableRowClick(row: any) {}
+  onTableRowClick(row: any) {
+    this._dialogRef
+      .open(TransactionEditorComponent, {
+        width: '800px',
+        data: row,
+        disableClose: true,
+      })
+      .afterClosed()
+      .subscribe((x) => {
+        this.getTransactions();
+      });
+  }
+
+  promptEditor() {
+    this._dialogRef
+      .open(TransactionEditorComponent, {
+        width: '800px',
+        disableClose: true,
+      })
+      .afterClosed()
+      .subscribe((x) => {
+        this.getTransactions();
+      });
+  }
 
   sortData(sort: any) {
     if (!sort.active || sort.direction === '') {
@@ -36,11 +62,15 @@ export class ClientTransactionComponent implements AfterViewInit {
     });
   }
 
-  ngAfterViewInit(): void {
+  getTransactions() {
     this.transactionService.getTransactions().subscribe({
       next: (x) => {
         this.dataSource.data = x;
       },
     });
+  }
+
+  ngAfterViewInit(): void {
+    this.getTransactions();
   }
 }

@@ -6,6 +6,7 @@ import { ExpenseDialogComponent } from './client-dashboard/expense-dialog/expens
 import { ClientTransactionComponent } from './client-transaction/client-transaction.component';
 import { ClientExpenditureComponent } from './client-expenditure/client-expenditure.component';
 import { ExpenseEditorComponent } from './client-expenditure/expense-editor/expense-editor.component';
+import { TransactionEditorComponent } from './client-transaction/transaction-editor/transaction-editor.component';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { ExpenseEditorComponent } from './client-expenditure/expense-editor/expe
     ClientTransactionComponent,
     ClientExpenditureComponent,
     ExpenseEditorComponent,
+    TransactionEditorComponent,
   ],
   imports: [SharedModule, ClientRoutingModule],
 })

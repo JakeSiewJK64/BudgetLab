@@ -13,11 +13,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jakesiewjk64.budgetlab.models.TransactionModel;
 import com.jakesiewjk64.budgetlab.services.TransactionService;
+
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -37,4 +40,8 @@ public class TransactionController {
 		return (List<TransactionModel>) transactionService.getAllTransactions();
 	}
 
+	@PostMapping("/upsertTransaction")
+	public long upsertTransaction(@RequestBody TransactionModel transaction) {
+		return transactionService.upsertTransaction(transaction);
+	}
 }

@@ -22,6 +22,18 @@ export class ExpenditureService {
     return this.http.post<any>(url, expense, httpOptions);
   }
 
+  getExpenseById(): Observable<ExpenseDto> {
+    const token = localStorage.getItem('token');
+    var url = `${URL_ENDPOINT}/expense/getExpenseById`;
+    var httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: token != null ? `Bearer ${token}` : '',
+      }),
+    };
+    return this.http.get<ExpenseDto>(url, httpOptions);
+  }
+
   getExpenses(): Observable<ExpenseDto[]> {
     const token = localStorage.getItem('token');
     var url = `${URL_ENDPOINT}/expense/getExpenses`;

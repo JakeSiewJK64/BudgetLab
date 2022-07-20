@@ -28,4 +28,8 @@ public class TransactionService {
 	public List<TransactionModel> getAllTransactions(){
 		return (List<TransactionModel>) transactionDao.getAll();
 	}
+
+	public long upsertTransaction(TransactionModel transaction) {
+		return transactionDao.save(transaction);
+	}
 }

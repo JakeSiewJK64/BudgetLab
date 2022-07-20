@@ -1,5 +1,10 @@
 <div class="m-2">
-    <h1>My Transactions</h1>
+    <div fxLayoutAlign="row">
+        <h1>My Transactions</h1>
+        <div class="ms-auto">
+            <button mat-flat-button class="bg-warning" (click)="promptEditor()">Add Transaction</button>
+        </div>
+    </div>
     <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z0 w-100" (matSortChange)="sortData($event)">
         <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef mat-sort-header="name" sortActionDescription="Sort by description">
