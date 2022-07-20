@@ -9,5 +9,5 @@
 </div>
 <div mat-dialog-actions class="justify-content-end">
     <button mat-stroked-button (click)="closeDialog()">Dismiss</button>
-    <button mat-flat-button color="warn" (click)="save()">Add Expense</button>
+    <button mat-flat-button color="warn" (click)="save()" disabled="{{ subject == '' }}">Add Expense</button>
 </div>

@@ -1,10 +1,4 @@
-import {
-  AfterViewInit,
-  ChangeDetectorRef,
-  Component,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -22,7 +16,7 @@ export class ClientExpenditureComponent implements AfterViewInit {
   constructor(
     private _expenseService: ExpenditureService,
     private _dataService: DataService,
-    private _matDialog: MatDialog,
+    private _matDialog: MatDialog
   ) {}
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
