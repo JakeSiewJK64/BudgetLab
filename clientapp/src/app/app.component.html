@@ -1,5 +1,6 @@
 <mat-toolbar>
     <mat-icon *ngIf="isAuthenticated" (click)="toggleSideNav()" class="appbar-icon">menu</mat-icon>
+    <img src="../assets/img/budgetlabs.png" alt="" style="width: 50px;">
     BudgetLabs
     <div class="ms-auto">
         <button mat-flat-button color="primary" (click)="redirectToAuth()" *ngIf="!isAuthenticated">Login</button>
