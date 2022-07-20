@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { TransactionDto } from '../models/TransactionDto';
-import { URL_ENDPOINT } from './endpoint.constant';
+import { URL_ENDPOINT } from './constants/endpoint.constant';
 
 @Injectable({
   providedIn: 'root',

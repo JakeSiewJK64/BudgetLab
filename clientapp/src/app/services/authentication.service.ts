@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthenticationRequestDto } from '../models/AuthenticationRequestDto';
 import { AuthenticationResponseDto } from '../models/AuthenticationResponseDto';
-import { URL_ENDPOINT } from './endpoint.constant';
+import { URL_ENDPOINT } from './constants/endpoint.constant';
 
 @Injectable({
   providedIn: 'root',
