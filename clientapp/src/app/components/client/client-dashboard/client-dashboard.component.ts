@@ -53,6 +53,12 @@ export class ClientDashboardComponent implements AfterViewInit {
           return this.dataService.compare(a.date, b.date, isAsc);
         case 'Total':
           return this.dataService.compare(a.total, b.total, isAsc);
+        case 'Transactions':
+          return this.dataService.compare(
+            a.transaction.length,
+            b.transaction.length,
+            isAsc
+          );
         default:
           return 0;
       }
