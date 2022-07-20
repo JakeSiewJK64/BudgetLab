@@ -4,12 +4,12 @@ import { Router } from '@angular/router';
 import { ExpenditureService } from 'src/app/services/expenditure.service';
 import { PostAuthenticateService } from 'src/app/services/ResultsService/post-authenticate-result.service';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 
 import { ExpenseDialogComponent } from '../_dialog/expense-dialog/expense-dialog.component';
 import { ExpenseDto } from 'src/app/models/ExpenseDto';
+import { DataService } from 'src/app/services/data.service';
 
 @Component({
   selector: 'app-client-dashboard',
@@ -18,6 +18,7 @@ import { ExpenseDto } from 'src/app/models/ExpenseDto';
 })
 export class ClientDashboardComponent implements AfterViewInit {
   constructor(
+    private dataService: DataService,
     private expenseService: ExpenditureService,
     private _dialog: MatDialog,
     private _snackbar: MatSnackBar,
@@ -25,9 +26,7 @@ export class ClientDashboardComponent implements AfterViewInit {
     private postAuthService: PostAuthenticateService
   ) {}
 
-  @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
-
   displayedColumns: string[] = ['Description', 'Date', 'Total'];
 
   dashboard_cards = [
@@ -48,7 +47,27 @@ export class ClientDashboardComponent implements AfterViewInit {
     },
   ];
 
-  dataSource = new MatTableDataSource();
+  dataSource = new MatTableDataSource<ExpenseDto>();
+
+  sortData(sort: any) {
+    if (!sort.active || sort.direction === '') {
+      return;
+    }
+
+    this.dataSource.data = this.dataSource.data.slice().sort((a, b) => {
+      const isAsc = sort.direction === 'asc';
+      switch (sort.active) {
+        case 'Description':
+          return this.dataService.compare(a.description, b.description, isAsc);
+        case 'Date':
+          return this.dataService.compare(a.date, b.date, isAsc);
+        case 'Total':
+          return this.dataService.compare(a.total, b.total, isAsc);
+        default:
+          return 0;
+      }
+    });
+  }
 
   onTableRowClick(expense: ExpenseDto) {
     this._dialog.open(ExpenseDialogComponent, {
@@ -59,11 +78,11 @@ export class ClientDashboardComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
     if (localStorage.getItem('token') != null) {
       this.expenseService.getExpenses().subscribe({
         next: (x) => {
+          this.dataSource = new MatTableDataSource(x);
+          this.dataSource.paginator = this.paginator;
           this.dataSource.data = x;
         },
         error: () => {

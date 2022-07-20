@@ -20,21 +20,21 @@
             </mat-card>
         </div>
     </div>
-    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z0 w-100">
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z0 w-100" (matSortChange)="sortData($event)">
         <ng-container matColumnDef="Description">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by description">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header="Description" sortActionDescription="Sort by description">
                 Description
             </th>
             <td mat-cell *matCellDef="let expense"> {{expense.description}} </td>
         </ng-container>
         <ng-container matColumnDef="Date">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by date">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header="Date" sortActionDescription="Sort by date">
                 Date
             </th>
             <td mat-cell *matCellDef="let expense"> {{expense.date}} </td>
         </ng-container>
         <ng-container matColumnDef="Total">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by total">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header="Total" sortActionDescription="Sort by total">
                 Total
             </th>
             <td mat-cell *matCellDef="let expense"> {{expense.total}} </td>
@@ -43,6 +43,6 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onTableRowClick(row)"
             class="expense-table"></tr>
     </table>
-    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons>
+    <mat-paginator [pageSizeOptions]="[3, 5, 10, 20]" showFirstLastButtons>
     </mat-paginator>
 </div>
