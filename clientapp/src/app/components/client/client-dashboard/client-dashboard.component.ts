@@ -130,6 +130,7 @@ export class ClientDashboardComponent implements AfterViewInit {
             'Unable to fetch expenses. Please click OK to sign in again!',
             'OK',
             {
+              duration: 5000,
               horizontalPosition: 'right',
               verticalPosition: 'bottom',
             }

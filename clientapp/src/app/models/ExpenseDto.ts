@@ -7,7 +7,7 @@ export class ExpenseDto {
   total: number;
   transaction: TransactionDto[];
 
-  constructor(description: string, date: Date) {
-    (this.description = description), (this.date = date);
+  constructor(id: number, description: string, date: Date) {
+    (this.description = description), (this.date = date), (this.id = id);
   }
 }

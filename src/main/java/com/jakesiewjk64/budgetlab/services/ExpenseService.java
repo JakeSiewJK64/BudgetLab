@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.jakesiewjk64.budgetlab.dao.ExpenseDao;
-import com.jakesiewjk64.budgetlab.dto.ExpenseDto;
 import com.jakesiewjk64.budgetlab.models.ExpenseModel;
 
 @Service
@@ -30,8 +29,9 @@ public class ExpenseService {
 		return expenseDao.getAll();
 	}
 
-	public long upsertExpense(ExpenseDto expense) {
+	public long upsertExpense(ExpenseModel expense) {
 		return expenseDao.save(new ExpenseModel(
+				expense.getId(),
 				expense.getDescription(),
 				expense.getDate()));
 	}

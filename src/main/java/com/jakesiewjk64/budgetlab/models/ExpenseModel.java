@@ -33,7 +33,8 @@ public class ExpenseModel {
 	public ExpenseModel() {
 	}
 
-	public ExpenseModel(String description, Date date) {
+	public ExpenseModel(long id, String description, Date date) {
+		this.id = id;
 		this.description = description;
 		this.date = date;
 	}

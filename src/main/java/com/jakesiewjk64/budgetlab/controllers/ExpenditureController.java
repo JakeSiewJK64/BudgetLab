@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.jakesiewjk64.budgetlab.dto.ExpenseDto;
 import com.jakesiewjk64.budgetlab.dto.GenericResponseDto;
 import com.jakesiewjk64.budgetlab.models.ExpenseModel;
 import com.jakesiewjk64.budgetlab.services.ExpenseService;
@@ -42,7 +41,7 @@ public class ExpenditureController {
 	}
 
 	@PostMapping("/upsertExpense")
-	public GenericResponseDto upsertExpense(@RequestBody ExpenseDto expense) {
+	public GenericResponseDto upsertExpense(@RequestBody ExpenseModel expense) {
 		return new GenericResponseDto(expenseService.upsertExpense(expense), "Successfully saved expense!");
 	}
 }

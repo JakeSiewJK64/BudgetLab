@@ -50,6 +50,7 @@ export class AuthenticationComponent implements AfterViewInit {
             'Either your password or username is incorrect. Please sign in again!',
             'OK',
             {
+              duration: 5000,
               horizontalPosition: 'right',
               verticalPosition: 'bottom',
             }

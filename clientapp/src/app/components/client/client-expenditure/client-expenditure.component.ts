@@ -1,4 +1,10 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -16,7 +22,7 @@ export class ClientExpenditureComponent implements AfterViewInit {
   constructor(
     private _expenseService: ExpenditureService,
     private _dataService: DataService,
-    private _matDialog: MatDialog
+    private _matDialog: MatDialog,
   ) {}
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -30,10 +36,8 @@ export class ClientExpenditureComponent implements AfterViewInit {
         disableClose: true,
       })
       .afterClosed()
-      .subscribe({
-        next: () => {
-          this.getExpense();
-        },
+      .subscribe((x) => {
+        this.getExpense();
       });
   }
 
@@ -48,6 +52,8 @@ export class ClientExpenditureComponent implements AfterViewInit {
           return this._dataService.compare(a.description, b.description, isAsc);
         case 'total':
           return this._dataService.compare(a.total, b.total, isAsc);
+        case 'date':
+          return this._dataService.compare(a.date, b.date, isAsc);
         default:
           return 0;
       }
@@ -62,7 +68,19 @@ export class ClientExpenditureComponent implements AfterViewInit {
       },
     });
   }
-  onTableRowClick(row: ExpenseDto) {}
+
+  onTableRowClick(row: ExpenseDto) {
+    this._matDialog
+      .open(ExpenseEditorComponent, {
+        width: '800px',
+        data: row,
+      })
+      .afterClosed()
+      .subscribe((x) => {
+        this.getExpense();
+      });
+  }
+
   ngAfterViewInit(): void {
     this.getExpense();
   }
