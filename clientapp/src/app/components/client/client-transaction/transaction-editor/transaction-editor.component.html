@@ -13,9 +13,9 @@
 </div>
 <mat-form-field appearance="outline" class="w-100">
     <mat-label>Select Expense</mat-label>
-    <mat-select value="{{selected}}">
+    <mat-select [(ngModel)]="selected">
         <div *ngFor="let expense of expensesList">
-            <mat-option value="{{expense.id}}">{{ expense.description }}</mat-option>
+            <mat-option [value]="expense.id">{{ expense.description }}</mat-option>
         </div>
     </mat-select>
 </mat-form-field>

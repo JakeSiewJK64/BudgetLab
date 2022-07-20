@@ -29,7 +29,7 @@ export class ClientDashboardComponent implements AfterViewInit {
   ) {}
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  displayedColumns: string[] = ['Description', 'Date', 'Total'];
+  displayedColumns: string[] = ['Description', 'Date', 'Total', 'Transactions'];
   totalSpendingToday = 0;
   totalSpendingThisYear = 0;
   totalSpendingThisMonth = 0;
