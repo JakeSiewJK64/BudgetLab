@@ -30,6 +30,14 @@ public class ExpenseModel {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "expenseId")
 	private List<TransactionModel> transaction;
 
+	public ExpenseModel() {
+	}
+
+	public ExpenseModel(String description, Date date) {
+		this.description = description;
+		this.date = date;
+	}
+
 	public List<TransactionModel> getTransaction() {
 		return transaction;
 	}
@@ -63,10 +71,10 @@ public class ExpenseModel {
 	}
 
 	public Float getTotal() {
-        float totalVal = 0;
-        for (TransactionModel transaction : this.transaction) {
-            totalVal += transaction.getAmount();
-        }
-        return totalVal;
-    }
+		float totalVal = 0;
+		for (TransactionModel transaction : this.transaction) {
+			totalVal += transaction.getAmount();
+		}
+		return totalVal;
+	}
 }

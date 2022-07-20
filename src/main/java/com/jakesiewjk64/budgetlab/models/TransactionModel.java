@@ -22,7 +22,7 @@ public class TransactionModel {
 	private long id;
 
 	@Column(name = "expenseid")
-	private int expenseId;
+	private long expenseId;
 
 	private float amount;
 	private String name;
@@ -35,11 +35,11 @@ public class TransactionModel {
 		this.id = id;
 	}
 
-	public int getExpenseId() {
+	public long getExpenseId() {
 		return expenseId;
 	}
 
-	public void setExpenseId(int expenseId) {
+	public void setExpenseId(long expenseId) {
 		this.expenseId = expenseId;
 	}
 

@@ -20,7 +20,7 @@ public class ExpenseDao implements IDao<ExpenseModel> {
 
 	@Autowired
 	private ExpenseRepository expenseRepository;
-	
+
 	@Override
 	public Optional<ExpenseModel> get(long id) {
 		try {
@@ -37,8 +37,7 @@ public class ExpenseDao implements IDao<ExpenseModel> {
 
 	@Override
 	public int save(ExpenseModel t) {
-		// TODO Auto-generated method stub
-		return 0;
+		return (int) expenseRepository.save(t).getId();
 	}
 
 	@Override

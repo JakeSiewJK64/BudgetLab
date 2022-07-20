@@ -16,11 +16,11 @@ import com.jakesiewjk64.budgetlab.models.TransactionModel;
 import com.jakesiewjk64.budgetlab.repository.TransactionRepository;
 
 @Component
-public class TransactionDao implements IDao<TransactionModel>{
+public class TransactionDao implements IDao<TransactionModel> {
 
 	@Autowired
 	private TransactionRepository transactionRepository;
-	
+
 	@Override
 	public Optional<TransactionModel> get(long id) {
 		return transactionRepository.findById(id);
@@ -33,21 +33,19 @@ public class TransactionDao implements IDao<TransactionModel>{
 
 	@Override
 	public int save(TransactionModel t) {
-		// TODO Auto-generated method stub
-		return 0;
+		return (int) this.transactionRepository.save(t).getId();
 	}
 
 	@Override
 	public void update(TransactionModel t) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void delete(TransactionModel t) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
-	
 }
