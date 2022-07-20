@@ -2,7 +2,7 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AuthenticationRequestDto } from 'src/app/models/AuthenticationRequestDto';
-import { BugetLabServiceService } from 'src/app/services/buget-lab.service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 import { PostAuthenticateService } from 'src/app/services/ResultsService/post-authenticate-result.service';
 
 @Component({
@@ -12,7 +12,7 @@ import { PostAuthenticateService } from 'src/app/services/ResultsService/post-au
 })
 export class AuthenticationComponent implements AfterViewInit {
   constructor(
-    private budgetLabService: BugetLabServiceService,
+    private budgetLabService: AuthenticationService,
     private router: Router,
     private postAuthService: PostAuthenticateService,
     private _snackbar: MatSnackBar

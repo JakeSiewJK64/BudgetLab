@@ -1,0 +1,24 @@
+<div class="m-2">
+    <h1>My Expenditure</h1>
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z0 w-100"
+        (matSortChange)="sortData($event)">
+        <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header="description"
+                sortActionDescription="Sort by description">
+                Name
+            </th>
+            <td mat-cell *matCellDef="let expense"> {{expense.description}} </td>
+        </ng-container>
+        <ng-container matColumnDef="total">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header="total" sortActionDescription="Sort by total">
+                Total
+            </th>
+            <td mat-cell *matCellDef="let expense"> {{expense.total}} </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onTableRowClick(row)"
+            class="expense-table"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons>
+    </mat-paginator>
+</div>

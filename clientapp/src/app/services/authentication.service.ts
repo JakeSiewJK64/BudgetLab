@@ -8,7 +8,7 @@ import { URL_ENDPOINT } from './endpoint.constant';
 @Injectable({
   providedIn: 'root',
 })
-export class BugetLabServiceService {
+export class AuthenticationService {
   constructor(private http: HttpClient) {}
 
   private httpOptions = {

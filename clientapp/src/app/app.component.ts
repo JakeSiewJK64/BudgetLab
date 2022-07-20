@@ -23,7 +23,7 @@ export class AppComponent implements AfterViewInit {
       icon: 'person',
     },
     {
-      path: '/client/expense',
+      path: '/client/expenditure',
       name: 'My Expenditure',
       icon: 'money',
     },

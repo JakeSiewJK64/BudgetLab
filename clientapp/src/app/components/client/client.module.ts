@@ -4,9 +4,15 @@ import { SharedModule } from 'src/app/shared.module';
 import { ClientDashboardComponent } from './client-dashboard/client-dashboard.component';
 import { ExpenseDialogComponent } from './_dialog/expense-dialog/expense-dialog.component';
 import { ClientTransactionComponent } from './client-transaction/client-transaction.component';
+import { ClientExpenditureComponent } from './client-expenditure/client-expenditure.component';
 
 @NgModule({
-  declarations: [ClientDashboardComponent, ExpenseDialogComponent, ClientTransactionComponent],
+  declarations: [
+    ClientDashboardComponent,
+    ExpenseDialogComponent,
+    ClientTransactionComponent,
+    ClientExpenditureComponent,
+  ],
   imports: [SharedModule, ClientRoutingModule],
 })
 export class ClientModule {}
