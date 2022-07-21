@@ -7,6 +7,7 @@ import { ClientTransactionComponent } from './client-transaction/client-transact
 import { ClientExpenditureComponent } from './client-expenditure/client-expenditure.component';
 import { ExpenseEditorComponent } from './client-expenditure/expense-editor/expense-editor.component';
 import { TransactionEditorComponent } from './client-transaction/transaction-editor/transaction-editor.component';
+import { UserAccountComponent } from './user-account/user-account.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { TransactionEditorComponent } from './client-transaction/transaction-edi
     ClientExpenditureComponent,
     ExpenseEditorComponent,
     TransactionEditorComponent,
+    UserAccountComponent,
   ],
   imports: [SharedModule, ClientRoutingModule],
 })
