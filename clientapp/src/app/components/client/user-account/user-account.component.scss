@@ -1,0 +1,15 @@
+@media only screen and (min-width: 700px) {
+    .profile-section {
+        flex-direction: row !important;
+    }
+}
+
+@media only screen and (max-width: 700px) {
+    .profile-section {
+        flex-direction: column !important;
+    }
+
+    .firstlastname-section {
+        flex-direction: column !important;
+    }
+}

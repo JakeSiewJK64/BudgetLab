@@ -127,20 +127,17 @@ export class ClientDashboardComponent implements AfterViewInit {
     localStorage.removeItem('username');
   }
 
-  getExpenses(id: number) {
-    this.expenseService.getExpenseByUserId(id).subscribe({
-      next: (x) => {
-        this.dataSource = new MatTableDataSource(x);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.data = x;
-        this.ngZone.run(() => {
-          this.getDashboardValues();
-        });
+  getUserInfo() {
+    this.authService.getUser().subscribe({
+      next: (x: any) => {
+        localStorage.setItem('username', x.username);
+        this.getExpenses(x.userid);
+        this.postAuthService.emitUserCallingCard(x.username);
       },
       error: () => {
         this._snackbar
           .open(
-            'Unable to fetch expenses. Please click OK to sign in again!',
+            'Unable to fetch user details. Please click OK to sign in again!',
             'OK',
             {
               duration: 5000,
@@ -158,13 +155,20 @@ export class ClientDashboardComponent implements AfterViewInit {
     });
   }
 
-  ngAfterViewInit(): void {
-    this.authService.getUser().subscribe({
-      next: (x: any) => {
-        this.getExpenses(x.userid);
-        localStorage.setItem('username', x.username);
-        this.postAuthService.emitUserCallingCard(x.username);
+  getExpenses(id: number) {
+    this.expenseService.getExpenseByUserId(id).subscribe({
+      next: (x) => {
+        this.dataSource = new MatTableDataSource(x);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.data = x;
+        this.ngZone.run(() => {
+          this.getDashboardValues();
+        });
       },
     });
+  }
+
+  ngAfterViewInit(): void {
+    this.getUserInfo();
   }
 }

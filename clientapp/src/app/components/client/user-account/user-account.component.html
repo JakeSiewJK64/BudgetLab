@@ -1,4 +1,36 @@
 <div class="m-2">
     <h1>My Account</h1>
-    
+    <div class="w-100">
+        <div fxLayout="row" fxLayoutGap="15" class="profile-section">
+            <mat-card class="mat-elevation-z0 w-25 text-center">
+                <div class="rounded-circle">
+                    <img src="../../../../assets/img/empty.png" alt="profile" style="width: 100px;">
+                </div>
+            </mat-card>
+            <mat-card class="mat-elevation-z0 w-75 text-center" *ngIf="user">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Username</mat-label>
+                    <input matInput [(ngModel)]="user.username" placeholder="Username">
+                    <mat-hint>Username</mat-hint>
+                </mat-form-field>
+                <div fxLayout="row" fxLayoutGap="10" class="firstlastname-section">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Firstname</mat-label>
+                        <input matInput [(ngModel)]="user.firstname" placeholder="Firstname">
+                        <mat-hint>Firstname</mat-hint>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Lastname</mat-label>
+                        <input matInput [(ngModel)]="user.lastname" placeholder="Lastname">
+                        <mat-hint>Lastname</mat-hint>
+                    </mat-form-field>
+                </div>
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Role</mat-label>
+                    <input matInput [(ngModel)]="user.role" placeholder="Role" readonly>
+                    <mat-hint>Role</mat-hint>
+                </mat-form-field>
+            </mat-card>
+        </div>
+    </div>
 </div>

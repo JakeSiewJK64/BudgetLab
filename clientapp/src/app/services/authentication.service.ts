@@ -18,10 +18,10 @@ export class AuthenticationService {
     }),
   };
 
-  getUser(): Observable<number> {
+  getUser(): Observable<UserModel> {
     var jwt = localStorage.getItem('token');
     let url = `${URL_ENDPOINT}/auth/getUser`;
-    return this.http.post<number>(url, jwt, this.httpOptions);
+    return this.http.post<UserModel>(url, jwt, this.httpOptions);
   }
 
   validateExpiry(requestJwt: String): Observable<Boolean> {
