@@ -4,7 +4,7 @@
     BudgetLabs
     <div class="ms-auto" fxLayout="row" fxLayoutGap="10">
         <div *ngIf="isAuthenticated">
-            <h5>Welcome back, {{username}}</h5>
+            <h5>Welcome back, {{username != null ? username : 'User'}}</h5>
         </div>
         <button mat-flat-button color="primary" (click)="redirectToAuth()" *ngIf="!isAuthenticated">Login</button>
         <button mat-flat-button color="warn" (click)="logout()" *ngIf="isAuthenticated">Logout</button>

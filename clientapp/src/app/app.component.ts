@@ -1,4 +1,9 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ViewChild,
+} from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
 import { PostAuthenticateService } from './services/ResultsService/post-authenticate-result.service';
@@ -47,6 +52,7 @@ export class AppComponent implements AfterViewInit {
   @ViewChild('sidenav') sidenav: MatSidenav;
   constructor(
     private router: Router,
+    private cdr: ChangeDetectorRef,
     private postAuth: PostAuthenticateService
   ) {}
 
@@ -75,6 +81,7 @@ export class AppComponent implements AfterViewInit {
     this.postAuth.getUserCallingCard().subscribe((x) => {
       this.username = x;
     });
+    this.cdr.detectChanges();
   }
 
   redirectToAuth() {
