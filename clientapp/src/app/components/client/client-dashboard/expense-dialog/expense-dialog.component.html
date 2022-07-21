@@ -3,8 +3,9 @@
 </h1>
 <div mat-dialog-content>
     <h1>Description: {{ data.description }}</h1>
-    <div *ngIf="data.transaction.length == 0" fxLayoutAlign="center center">
+    <div *ngIf="data.transaction.length == 0" fxLayoutAlign="center center" fxLayout="column">
         <img src='../../../../../assets/img/empty.png' alt="" class="w-25">
+        <h2>You currently have no transactions made for this expense.</h2>
     </div>
     <div *ngIf="data.transaction.length > 0">
         <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z0 w-100"
