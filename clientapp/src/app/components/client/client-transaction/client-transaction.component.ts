@@ -1,5 +1,6 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { TransactionDto } from 'src/app/models/TransactionDto';
 import { DataService } from 'src/app/services/data.service';
@@ -17,6 +18,7 @@ export class ClientTransactionComponent implements AfterViewInit {
     private _dialogRef: MatDialog,
     private _dataService: DataService
   ) {}
+  @ViewChild(MatPaginator) public paginator: MatPaginator;
   dataSource = new MatTableDataSource<TransactionDto>();
   displayedColumns = ['name', 'amount'];
 
@@ -66,6 +68,7 @@ export class ClientTransactionComponent implements AfterViewInit {
     this.transactionService.getTransactions().subscribe({
       next: (x) => {
         this.dataSource.data = x;
+        this.dataSource.paginator = this.paginator;
       },
     });
   }

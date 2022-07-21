@@ -29,7 +29,7 @@ export class TransactionEditorComponent implements AfterViewInit {
   expensesList: Array<ExpenseDto> = [];
   subject: string;
   amount: number;
-  selected: number = 0;
+  selected: number;
 
   save() {
     this._transactionService
@@ -79,7 +79,6 @@ export class TransactionEditorComponent implements AfterViewInit {
     }
     this._expenseService.getExpenses().subscribe((x) => {
       this.expensesList = x;
-      this.selected = x[0].id;
     });
     this._cdr.detectChanges();
   }
