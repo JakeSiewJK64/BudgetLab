@@ -13,7 +13,7 @@
 </div>
 <mat-form-field appearance="outline" class="w-100">
     <mat-label>Select Expense</mat-label>
-    <mat-select [(ngModel)]="selected">
+    <mat-select [(ngModel)]="selected" required>
         <div *ngFor="let expense of expensesList">
             <mat-option [value]="expense.id">{{ expense.description }}</mat-option>
         </div>
@@ -21,6 +21,7 @@
 </mat-form-field>
 <div mat-dialog-actions class="justify-content-end">
     <button mat-stroked-button (click)="closeDialog()">Dismiss</button>
-    <button mat-flat-button color="warn" (click)="save()" disabled="{{ subject == '' }}">{{ data != null ? 'Update' :
+    <button mat-flat-button color="warn" (click)="save()"
+        disabled="{{ subject == '' || selected == null || amount <= 0 }}">{{ data != null ? 'Update' :
         'Add' }} Transaction</button>
 </div>
