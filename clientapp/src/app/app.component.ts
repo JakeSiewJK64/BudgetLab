@@ -15,7 +15,7 @@ import { PostAuthenticateService } from './services/ResultsService/post-authenti
 export class AppComponent implements AfterViewInit {
   isAuthenticated: Boolean = localStorage.getItem('token') != null;
   redirectRoute: string = '/auth/authenticate';
-  username: string = '';
+  username: string | null;
   routes = [
     {
       path: '/client/dashboard',
@@ -56,6 +56,11 @@ export class AppComponent implements AfterViewInit {
     private postAuth: PostAuthenticateService
   ) {}
 
+  clearCache() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('username');
+  }
+
   onClickRoute(routePath: string) {
     this.router.navigateByUrl(routePath);
   }
@@ -65,8 +70,8 @@ export class AppComponent implements AfterViewInit {
   }
 
   logout() {
-    localStorage.removeItem('token');
     this.redirectToAuth();
+    this.clearCache();
     this.postAuth.emitLoggedIn();
   }
 
@@ -78,6 +83,9 @@ export class AppComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.checkAuthentication();
+    if (this.username == null || this.username == '') {
+      this.username = localStorage.getItem('username');
+    }
     this.postAuth.getUserCallingCard().subscribe((x) => {
       this.username = x;
     });

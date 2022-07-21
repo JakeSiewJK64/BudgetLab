@@ -122,6 +122,11 @@ export class ClientDashboardComponent implements AfterViewInit {
     this.isLoading = false;
   }
 
+  clearCache() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('username');
+  }
+
   getExpenses(id: number) {
     this.expenseService.getExpenseByUserId(id).subscribe({
       next: (x) => {
@@ -144,8 +149,8 @@ export class ClientDashboardComponent implements AfterViewInit {
             }
           )
           .afterDismissed()
-          .subscribe((x) => {
-            localStorage.removeItem('token');
+          .subscribe((_) => {
+            this.clearCache();
             this.router.navigateByUrl('/auth/authenticate');
             this.postAuthService.emitLoggedIn();
           });
@@ -157,6 +162,7 @@ export class ClientDashboardComponent implements AfterViewInit {
     this.authService.getUser().subscribe({
       next: (x: any) => {
         this.getExpenses(x.userid);
+        localStorage.setItem('username', x.username);
         this.postAuthService.emitUserCallingCard(x.username);
       },
     });
