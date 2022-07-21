@@ -23,7 +23,7 @@ public class ExpenseDao implements IDao<ExpenseModel> {
 	private ExpenseRepository expenseRepository;
 
 	public List<ExpenseModel> getExpensesByUserId(long userid) {
-		return this.expenseRepository.findExpensesByUserId(userid);
+		return expenseRepository.findExpensesByUserId(userid);
 	}
 
 	@Override

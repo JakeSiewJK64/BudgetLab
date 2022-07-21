@@ -57,10 +57,10 @@ public class AuthenticationController {
 	@PostMapping("/getUser")
 	public ResponseEntity<?> getUser(@RequestBody String token) {
 		try {
-			String username = this.jwtTokenUtil.extractUsername(token);
+			String username = jwtTokenUtil.extractUsername(token);
 			return ResponseEntity.status(200).body(new UserDto(
-					this.userRepository.findUserByUsername(username).getUsername(),
-					this.userRepository.findUserByUsername(username).getId()));
+					userRepository.findUserByUsername(username).getUsername(),
+					userRepository.findUserByUsername(username).getId()));
 		} catch (Exception e) {
 			return ResponseEntity.status(500).body(new ErrorResponseDto(e.getMessage(), e.toString()));
 		}

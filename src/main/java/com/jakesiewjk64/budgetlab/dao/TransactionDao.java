@@ -37,7 +37,7 @@ public class TransactionDao implements IDao<TransactionModel> {
 
 	@Override
 	public int save(TransactionModel t) {
-		return (int) this.transactionRepository.save(t).getId();
+		return (int) transactionRepository.save(t).getId();
 	}
 
 	@Override
