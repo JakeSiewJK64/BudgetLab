@@ -85,9 +85,9 @@ export class ClientExpenditureComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.authService.getUserId().subscribe({
-      next: (x) => {
-        this.userid = x;
+    this.authService.getUser().subscribe({
+      next: (x: any) => {
+        this.userid = x.userid;
         this.getExpenses(this.userid);
       },
     });

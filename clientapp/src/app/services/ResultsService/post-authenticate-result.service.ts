@@ -5,6 +5,7 @@ import { EventEmitter, Injectable, Output } from '@angular/core';
 })
 export class PostAuthenticateService {
   @Output() loggedInEmitter: EventEmitter<any> = new EventEmitter();
+  @Output() userCallingCard: EventEmitter<any> = new EventEmitter();
 
   constructor() {}
 
@@ -14,5 +15,13 @@ export class PostAuthenticateService {
 
   getLoggedIn() {
     return this.loggedInEmitter;
+  }
+
+  emitUserCallingCard(username: string) {
+    this.userCallingCard.emit(username);
+  }
+
+  getUserCallingCard() {
+    return this.userCallingCard;
   }
 }

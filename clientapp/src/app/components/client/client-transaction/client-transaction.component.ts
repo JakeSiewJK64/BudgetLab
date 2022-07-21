@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -20,7 +20,7 @@ export class ClientTransactionComponent implements AfterViewInit {
     private authService: AuthenticationService,
     private _dataService: DataService
   ) {}
-  @ViewChild(MatPaginator) public paginator: MatPaginator;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   dataSource = new MatTableDataSource<TransactionDto>();
   displayedColumns = ['name', 'amount'];
   userid: number = 0;
@@ -74,18 +74,16 @@ export class ClientTransactionComponent implements AfterViewInit {
   }
 
   getTransactions(userid: number) {
-    this.transactionService.getTransactionsByUserId(userid).subscribe({
-      next: (x) => {
-        this.dataSource.data = x;
-        this.dataSource.paginator = this.paginator;
-      },
+    this.transactionService.getTransactionsByUserId(userid).subscribe((x) => {
+      this.dataSource.data = x;
+      this.dataSource.paginator = this.paginator;
     });
   }
 
   ngAfterViewInit(): void {
-    this.authService.getUserId().subscribe({
-      next: (x) => {
-        this.userid = x;
+    this.authService.getUser().subscribe({
+      next: (x: any) => {
+        this.userid = x.userid;
         this.getTransactions(this.userid);
       },
     });

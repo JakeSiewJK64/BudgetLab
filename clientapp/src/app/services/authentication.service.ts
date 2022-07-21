@@ -18,7 +18,7 @@ export class AuthenticationService {
     }),
   };
 
-  getUserId(): Observable<number> {
+  getUser(): Observable<number> {
     var jwt = localStorage.getItem('token');
     let url = `${URL_ENDPOINT}/auth/getUser`;
     return this.http.post<number>(url, jwt, this.httpOptions);

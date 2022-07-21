@@ -2,7 +2,10 @@
     <mat-icon *ngIf="isAuthenticated" (click)="toggleSideNav()" class="appbar-icon">menu</mat-icon>
     <img src="../assets/img/budgetlabs.png" alt="" style="width: 50px;">
     BudgetLabs
-    <div class="ms-auto">
+    <div class="ms-auto" fxLayout="row" fxLayoutGap="10">
+        <div *ngIf="isAuthenticated">
+            <h5>Welcome back, {{username}}</h5>
+        </div>
         <button mat-flat-button color="primary" (click)="redirectToAuth()" *ngIf="!isAuthenticated">Login</button>
         <button mat-flat-button color="warn" (click)="logout()" *ngIf="isAuthenticated">Logout</button>
     </div>

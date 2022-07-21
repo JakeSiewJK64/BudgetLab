@@ -23,6 +23,7 @@ import com.jakesiewjk64.budgetlab.dto.AuthenticationRequestDto;
 import com.jakesiewjk64.budgetlab.dto.AuthenticationResponseDto;
 import com.jakesiewjk64.budgetlab.dto.ErrorResponseDto;
 import com.jakesiewjk64.budgetlab.dto.RegisterResponseDto;
+import com.jakesiewjk64.budgetlab.dto.UserDto;
 import com.jakesiewjk64.budgetlab.models.UserModel;
 import com.jakesiewjk64.budgetlab.repository.UserRepository;
 import com.jakesiewjk64.budgetlab.services.JwtUserDetailsService;
@@ -57,7 +58,9 @@ public class AuthenticationController {
 	public ResponseEntity<?> getUser(@RequestBody String token) {
 		try {
 			String username = this.jwtTokenUtil.extractUsername(token);
-			return ResponseEntity.status(200).body(this.userRepository.findUserByUsername(username).getId());
+			return ResponseEntity.status(200).body(new UserDto(
+					this.userRepository.findUserByUsername(username).getUsername(),
+					this.userRepository.findUserByUsername(username).getId()));
 		} catch (Exception e) {
 			return ResponseEntity.status(500).body(new ErrorResponseDto(e.getMessage(), e.toString()));
 		}

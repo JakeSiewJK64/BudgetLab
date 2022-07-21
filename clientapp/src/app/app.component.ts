@@ -10,7 +10,7 @@ import { PostAuthenticateService } from './services/ResultsService/post-authenti
 export class AppComponent implements AfterViewInit {
   isAuthenticated: Boolean = localStorage.getItem('token') != null;
   redirectRoute: string = '/auth/authenticate';
-
+  username: string = '';
   routes = [
     {
       path: '/client/dashboard',
@@ -47,7 +47,6 @@ export class AppComponent implements AfterViewInit {
   @ViewChild('sidenav') sidenav: MatSidenav;
   constructor(
     private router: Router,
-    private auth: PostAuthenticateService,
     private postAuth: PostAuthenticateService
   ) {}
 
@@ -65,9 +64,16 @@ export class AppComponent implements AfterViewInit {
     this.postAuth.emitLoggedIn();
   }
 
-  ngAfterViewInit(): void {
-    this.auth.getLoggedIn().subscribe((x) => {
+  checkAuthentication() {
+    this.postAuth.getLoggedIn().subscribe((x) => {
       this.isAuthenticated = x;
+    });
+  }
+
+  ngAfterViewInit(): void {
+    this.checkAuthentication();
+    this.postAuth.getUserCallingCard().subscribe((x) => {
+      this.username = x;
     });
   }
 

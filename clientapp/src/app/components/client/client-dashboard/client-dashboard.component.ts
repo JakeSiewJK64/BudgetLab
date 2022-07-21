@@ -154,9 +154,10 @@ export class ClientDashboardComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.authService.getUserId().subscribe({
-      next: (x) => {
-        this.getExpenses(x);
+    this.authService.getUser().subscribe({
+      next: (x: any) => {
+        this.getExpenses(x.userid);
+        this.postAuthService.emitUserCallingCard(x.username);
       },
     });
   }

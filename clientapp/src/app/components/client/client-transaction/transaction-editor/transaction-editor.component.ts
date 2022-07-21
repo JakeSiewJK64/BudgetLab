@@ -81,9 +81,9 @@ export class TransactionEditorComponent implements AfterViewInit {
   }
 
   getUserId() {
-    this.authService.getUserId().subscribe({
-      next: (x) => {
-        this.userid = x;
+    this.authService.getUser().subscribe({
+      next: (x: any) => {
+        this.userid = x.userid;
         this.getExpense(this.userid);
       },
     });
