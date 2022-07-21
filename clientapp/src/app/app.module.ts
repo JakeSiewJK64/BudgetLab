@@ -9,6 +9,7 @@ import { NotfoundComponent } from './components/shared/notfound/notfound.compone
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FooterComponent } from './components/shared/footer/footer.component';
 import { DatePipe } from '@angular/common';
+import { AuthGuardService } from './services/auth-guard.service';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,7 @@ import { DatePipe } from '@angular/common';
     SharedModule,
     BrowserAnimationsModule,
   ],
-  providers: [DatePipe],
+  providers: [DatePipe, AuthGuardService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
