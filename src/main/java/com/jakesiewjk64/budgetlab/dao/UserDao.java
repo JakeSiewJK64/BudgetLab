@@ -21,6 +21,10 @@ public class UserDao implements IDao<UserModel> {
     @Autowired
     private UserRepository userRepository;
 
+    public UserModel getUserByUsername(String username) {
+        return userRepository.findUserByUsername(username);
+    }
+
     @Override
     public Optional<UserModel> get(long id) {
         return userRepository.findById(id);

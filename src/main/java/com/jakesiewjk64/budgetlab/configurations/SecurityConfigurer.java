@@ -64,8 +64,8 @@ public class SecurityConfigurer {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-        String[] admin = UserRoleBridgeRepository.findRoleByName("Admin");
-        String[] user = UserRoleBridgeRepository.findRoleByName("User");
+        String[] admin = UserRoleBridgeRepository.findRoleHashByName("Admin");
+        String[] user = UserRoleBridgeRepository.findRoleHashByName("User");
 
         http.cors().and().csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()

@@ -39,7 +39,7 @@ public class JwtUserDetailsService implements UserDetailsService {
 		List<UserToRoleModel> roles = userRoleBridgeRepository.findUserRolesById(user.getId());
 
 		if (roles.size() == 0) {
-			authorityList.add(new SimpleGrantedAuthority(userRoleBridgeRepository.findRoleByName("User")[0]));
+			authorityList.add(new SimpleGrantedAuthority(userRoleBridgeRepository.findRoleHashByName("User")[0]));
 		} else {
 			for (UserToRoleModel r : roles) {
 				authorityList.add(new SimpleGrantedAuthority(r.getUserRole().getRolehash()));

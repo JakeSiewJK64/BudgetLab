@@ -23,10 +23,10 @@ import com.jakesiewjk64.budgetlab.dto.AuthenticationRequestDto;
 import com.jakesiewjk64.budgetlab.dto.AuthenticationResponseDto;
 import com.jakesiewjk64.budgetlab.dto.ErrorResponseDto;
 import com.jakesiewjk64.budgetlab.dto.RegisterResponseDto;
-import com.jakesiewjk64.budgetlab.dto.UserDto;
 import com.jakesiewjk64.budgetlab.models.UserModel;
 import com.jakesiewjk64.budgetlab.repository.UserRepository;
 import com.jakesiewjk64.budgetlab.services.JwtUserDetailsService;
+import com.jakesiewjk64.budgetlab.services.UserService;
 import com.jakesiewjk64.budgetlab.utils.JwtTokenUtil;
 
 @CrossOrigin(origins = "*")
@@ -49,6 +49,9 @@ public class AuthenticationController {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
+	@Autowired
+	private UserService userService;
+
 	private void authenticateUser(String username, String password) throws Exception {
 		authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
 				username, password));
@@ -58,9 +61,8 @@ public class AuthenticationController {
 	public ResponseEntity<?> getUser(@RequestBody String token) {
 		try {
 			String username = jwtTokenUtil.extractUsername(token);
-			return ResponseEntity.status(200).body(new UserDto(
-					userRepository.findUserByUsername(username).getUsername(),
-					userRepository.findUserByUsername(username).getId()));
+			return ResponseEntity.status(200).body(
+					userService.getUserByUsername(username));
 		} catch (Exception e) {
 			return ResponseEntity.status(500).body(new ErrorResponseDto(e.getMessage(), e.toString()));
 		}
