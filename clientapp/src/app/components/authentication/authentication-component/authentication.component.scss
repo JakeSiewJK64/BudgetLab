@@ -1,3 +1,15 @@
+.logging-icon {
+    width: 30px;
+    height: auto;
+    animation: spinning 5s linear infinite;
+}
+
+@keyframes spinning {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
 .authentication-card {
     position: absolute;
     width: 100%;

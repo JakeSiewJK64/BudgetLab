@@ -14,6 +14,16 @@
       <mat-hint>Enter Password</mat-hint>
     </mat-form-field>
     <button mat-raised-button color="warn" (click)="onclick()"
-      disabled="{{ username == '' || password == '' }}">Login</button>
+      disabled="{{ username == '' || password == '' || isProcessing }}">
+      <section *ngIf="isProcessing" fxLayout="row" fxLayoutAlign="center" fxLayoutGap="5">
+        <img src="../../../../assets/img/budgetlabs.png" class="logging-icon" />
+        <span>
+          Logging In...
+        </span>
+      </section>
+      <section *ngIf="!isProcessing">
+        Login
+      </section>
+    </button>
   </mat-card>
 </div>

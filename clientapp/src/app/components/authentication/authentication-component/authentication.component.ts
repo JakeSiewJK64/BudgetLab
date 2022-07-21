@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AuthenticationRequestDto } from 'src/app/models/AuthenticationRequestDto';
@@ -20,8 +20,9 @@ export class AuthenticationComponent implements AfterViewInit {
 
   username: string = '';
   password: string = '';
-
   jwt = localStorage.getItem('token');
+  isProcessing = false;
+
   ngAfterViewInit(): void {
     if (this.jwt != null) {
       this.budgetLabService
@@ -35,10 +36,12 @@ export class AuthenticationComponent implements AfterViewInit {
   }
 
   onclick() {
+    this.isProcessing = true;
     this.budgetLabService
       .authenticate(new AuthenticationRequestDto(this.username, this.password))
       .subscribe({
         next: (x) => {
+          this.isProcessing = false;
           localStorage.setItem('token', x.jwt.toString());
           if (x.jwt != null || x.jwt != '') {
             this.postAuthService.emitLoggedIn();
@@ -46,6 +49,7 @@ export class AuthenticationComponent implements AfterViewInit {
           }
         },
         error: () => {
+          this.isProcessing = false;
           this._snackbar.open(
             'Either your password or username is incorrect. Please sign in again!',
             'OK',
