@@ -9,6 +9,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ExpenseDto } from 'src/app/models/ExpenseDto';
 import { TransactionDto } from 'src/app/models/TransactionDto';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 import { ExpenditureService } from 'src/app/services/expenditure.service';
 import { TransactionService } from 'src/app/services/transaction.service';
 
@@ -24,8 +25,10 @@ export class TransactionEditorComponent implements AfterViewInit {
     private _transactionService: TransactionService,
     private _snackbar: MatSnackBar,
     private _expenseService: ExpenditureService,
-    @Inject(MAT_DIALOG_DATA) public data: TransactionDto
+    private authService: AuthenticationService,
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
+  userid: number = 0;
   expensesList: Array<ExpenseDto> = [];
   subject: string;
   amount: number;
@@ -38,7 +41,8 @@ export class TransactionEditorComponent implements AfterViewInit {
           this.subject,
           this.amount,
           this.selected,
-          this.data == null ? 0 : this.data.id
+          this.data == null ? 0 : this.data.id,
+          this.data.userid ? this.data.userid : this.data.useridorigin
         )
       )
       .subscribe({
@@ -70,16 +74,28 @@ export class TransactionEditorComponent implements AfterViewInit {
     this._dialogRef.close();
   }
 
-  ngAfterViewInit(): void {
-    this.data;
-    if (this.data != null) {
-      this.subject = this.data.name;
-      this.amount = this.data.amount;
-      this.selected = this.data.expenseId;
-    }
-    this._expenseService.getExpenses().subscribe((x) => {
+  getExpense(userid: number) {
+    this._expenseService.getExpenseByUserId(userid).subscribe((x) => {
       this.expensesList = x;
     });
+  }
+
+  getUserId() {
+    this.authService.getUserId().subscribe({
+      next: (x) => {
+        this.userid = x;
+        this.getExpense(this.userid);
+      },
+    });
+  }
+
+  ngAfterViewInit(): void {
+    if (this.data.row != null) {
+      this.subject = this.data.row.name;
+      this.amount = this.data.row.amount;
+      this.selected = this.data.row.expenseId;
+    }
+    this.getUserId();
     this._cdr.detectChanges();
   }
 }

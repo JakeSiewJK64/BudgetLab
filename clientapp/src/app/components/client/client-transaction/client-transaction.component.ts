@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { TransactionDto } from 'src/app/models/TransactionDto';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DataService } from 'src/app/services/data.service';
 import { TransactionService } from 'src/app/services/transaction.service';
 import { TransactionEditorComponent } from './transaction-editor/transaction-editor.component';
@@ -16,22 +17,27 @@ export class ClientTransactionComponent implements AfterViewInit {
   constructor(
     private transactionService: TransactionService,
     private _dialogRef: MatDialog,
+    private authService: AuthenticationService,
     private _dataService: DataService
   ) {}
   @ViewChild(MatPaginator) public paginator: MatPaginator;
   dataSource = new MatTableDataSource<TransactionDto>();
   displayedColumns = ['name', 'amount'];
+  userid: number = 0;
 
   onTableRowClick(row: any) {
     this._dialogRef
       .open(TransactionEditorComponent, {
         width: '800px',
-        data: row,
+        data: {
+          row: row,
+          useridorigin: this.userid,
+        },
         disableClose: true,
       })
       .afterClosed()
       .subscribe((x) => {
-        this.getTransactions();
+        this.getTransactions(this.userid);
       });
   }
 
@@ -40,10 +46,13 @@ export class ClientTransactionComponent implements AfterViewInit {
       .open(TransactionEditorComponent, {
         width: '800px',
         disableClose: true,
+        data: {
+          useridorigin: this.userid,
+        },
       })
       .afterClosed()
-      .subscribe((x) => {
-        this.getTransactions();
+      .subscribe((_) => {
+        this.getTransactions(this.userid);
       });
   }
 
@@ -64,8 +73,8 @@ export class ClientTransactionComponent implements AfterViewInit {
     });
   }
 
-  getTransactions() {
-    this.transactionService.getTransactions().subscribe({
+  getTransactions(userid: number) {
+    this.transactionService.getTransactionsByUserId(userid).subscribe({
       next: (x) => {
         this.dataSource.data = x;
         this.dataSource.paginator = this.paginator;
@@ -74,6 +83,11 @@ export class ClientTransactionComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.getTransactions();
+    this.authService.getUserId().subscribe({
+      next: (x) => {
+        this.userid = x;
+        this.getTransactions(this.userid);
+      },
+    });
   }
 }

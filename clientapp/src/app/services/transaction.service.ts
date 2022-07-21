@@ -25,6 +25,20 @@ export class TransactionService {
     );
   }
 
+  getTransactionsByUserId(userid: number): Observable<TransactionDto[]> {
+    const token = localStorage.getItem('token');
+    var httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: token != null ? `Bearer ${token}` : '',
+      }),
+    };
+    return this.http.get<TransactionDto[]>(
+      `${URL_ENDPOINT}/transaction/getAllTransactionsByUserId/${userid}`,
+      httpOptions
+    );
+  }
+
   getTransactions(): Observable<TransactionDto[]> {
     const token = localStorage.getItem('token');
     var httpOptions = {

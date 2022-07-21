@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.jakesiewjk64.budgetlab.models.TransactionModel;
 import com.jakesiewjk64.budgetlab.services.TransactionService;
 
-
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/transaction")
@@ -38,6 +37,11 @@ public class TransactionController {
 	@GetMapping("/getAllTransactions")
 	public List<TransactionModel> getAllTransactionModel() {
 		return (List<TransactionModel>) transactionService.getAllTransactions();
+	}
+
+	@GetMapping("/getAllTransactionsByUserId/{userid}")
+	public List<TransactionModel> getAllTransactionModel(@PathVariable int userid) {
+		return (List<TransactionModel>) transactionService.getAllTransactionsByUserId(userid);
 	}
 
 	@PostMapping("/upsertTransaction")

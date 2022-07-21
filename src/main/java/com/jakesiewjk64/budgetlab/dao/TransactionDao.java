@@ -26,6 +26,10 @@ public class TransactionDao implements IDao<TransactionModel> {
 		return transactionRepository.findById(id);
 	}
 
+	public Collection<TransactionModel> getAllByUserId(int userid) {
+		return transactionRepository.findAllByUserId(userid);
+	}
+
 	@Override
 	public Collection<TransactionModel> getAll() {
 		return transactionRepository.findAll();

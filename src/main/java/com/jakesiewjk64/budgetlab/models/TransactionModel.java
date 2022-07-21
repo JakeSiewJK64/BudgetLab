@@ -26,6 +26,7 @@ public class TransactionModel {
 
 	private float amount;
 	private String name;
+	private float userid;
 
 	public long getId() {
 		return id;
@@ -57,6 +58,14 @@ public class TransactionModel {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public float getUserid() {
+		return userid;
+	}
+
+	public void setUserid(float userid) {
+		this.userid = userid;
 	}
 
 }

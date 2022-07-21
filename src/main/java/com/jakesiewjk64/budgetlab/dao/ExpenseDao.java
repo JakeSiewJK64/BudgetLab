@@ -7,6 +7,7 @@
 package com.jakesiewjk64.budgetlab.dao;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,10 @@ public class ExpenseDao implements IDao<ExpenseModel> {
 
 	@Autowired
 	private ExpenseRepository expenseRepository;
+
+	public List<ExpenseModel> getExpensesByUserId(long userid) {
+		return this.expenseRepository.findExpensesByUserId(userid);
+	}
 
 	@Override
 	public Optional<ExpenseModel> get(long id) {

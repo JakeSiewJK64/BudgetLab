@@ -21,10 +21,10 @@ export class ExpenseEditorComponent implements AfterViewInit {
     private _expenseService: ExpenditureService,
     private _snackbar: MatSnackBar,
     private _cdr: ChangeDetectorRef,
-    @Inject(MAT_DIALOG_DATA) public data: ExpenseDto
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
 
-  subject: string = this.data != null ? this.data.description : '';
+  subject: string = this.data.row != null ? this.data.row.description : '';
 
   ngAfterViewInit(): void {
     this._cdr.detectChanges();
@@ -38,9 +38,10 @@ export class ExpenseEditorComponent implements AfterViewInit {
     this._expenseService
       .saveExpenses(
         new ExpenseDto(
-          this.data != null ? this.data.id : 0,
+          this.data.row != null ? this.data.row.id : 0,
           this.subject,
-          new Date()
+          new Date(),
+          this.data.userid != null ? this.data.userid : this.data.useridorigin
         )
       )
       .subscribe({

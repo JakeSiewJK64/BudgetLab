@@ -20,13 +20,17 @@ public class TransactionService {
 
 	@Autowired
 	private TransactionDao transactionDao;
-	
+
 	public Optional<TransactionModel> getOneTransaction(long id) {
 		return transactionDao.get(id);
 	}
-	
-	public List<TransactionModel> getAllTransactions(){
+
+	public List<TransactionModel> getAllTransactions() {
 		return (List<TransactionModel>) transactionDao.getAll();
+	}
+
+	public List<TransactionModel> getAllTransactionsByUserId(int userid) {
+		return (List<TransactionModel>) transactionDao.getAllByUserId(userid);
 	}
 
 	public long upsertTransaction(TransactionModel transaction) {

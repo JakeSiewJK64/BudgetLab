@@ -53,6 +53,16 @@ public class AuthenticationController {
 				username, password));
 	}
 
+	@PostMapping("/getUser")
+	public ResponseEntity<?> getUser(@RequestBody String token) {
+		try {
+			String username = this.jwtTokenUtil.extractUsername(token);
+			return ResponseEntity.status(200).body(this.userRepository.findUserByUsername(username).getId());
+		} catch (Exception e) {
+			return ResponseEntity.status(500).body(new ErrorResponseDto(e.getMessage(), e.toString()));
+		}
+	}
+
 	@PostMapping("/validateTokenExpiry/{token}")
 	public ResponseEntity<?> validateToken(@PathVariable String token) {
 		try {

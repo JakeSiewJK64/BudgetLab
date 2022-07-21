@@ -26,6 +26,7 @@ public class ExpenseModel {
 	private long id;
 	private String description;
 	private Date date;
+	private long userid;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "expenseId")
 	private List<TransactionModel> transaction;
@@ -77,5 +78,13 @@ public class ExpenseModel {
 			totalVal += transaction.getAmount();
 		}
 		return totalVal;
+	}
+
+	public long getUserid() {
+		return userid;
+	}
+
+	public void setUserid(long userid) {
+		this.userid = userid;
 	}
 }

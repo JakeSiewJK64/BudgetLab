@@ -41,7 +41,13 @@ public class SecurityConfigurer {
     };
 
     private final String[] AUTHENTICATED_PATHS = new String[] {
-            "/userdashboard"
+            "/userdashboard",
+            "/expense/getExpensesByUserId/**",
+            "/expense/getExpenseById/**",
+            "/expense/upsertExpense/**",
+            "/transaction/getAllTransactionsByUserId/**",
+            "/transaction/upsertTransaction/**",
+            "/transaction/getTransactionById/**",
     };
 
     @Bean
@@ -65,8 +71,8 @@ public class SecurityConfigurer {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
                 .antMatchers(PUBLIC_PATHS).permitAll()
-                .antMatchers(ADMIN_PATHS).hasAnyAuthority(admin)
                 .antMatchers(AUTHENTICATED_PATHS).hasAnyAuthority(user)
+                .antMatchers(ADMIN_PATHS).hasAnyAuthority(admin)
                 .anyRequest()
                 .authenticated();
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);

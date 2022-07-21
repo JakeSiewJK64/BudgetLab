@@ -11,6 +11,7 @@ import { ExpenseDialogComponent } from './expense-dialog/expense-dialog.componen
 import { ExpenseDto } from 'src/app/models/ExpenseDto';
 import { DataService } from 'src/app/services/data.service';
 import { ClientDashboardDto } from 'src/app/models/ClientDashboardDto';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'app-client-dashboard',
@@ -21,6 +22,7 @@ export class ClientDashboardComponent implements AfterViewInit {
   constructor(
     private dataService: DataService,
     private expenseService: ExpenditureService,
+    private authService: AuthenticationService,
     private _dialog: MatDialog,
     private _snackbar: MatSnackBar,
     private ngZone: NgZone,
@@ -120,8 +122,8 @@ export class ClientDashboardComponent implements AfterViewInit {
     this.isLoading = false;
   }
 
-  ngAfterViewInit(): void {
-    this.expenseService.getExpenses().subscribe({
+  getExpenses(id: number) {
+    this.expenseService.getExpenseByUserId(id).subscribe({
       next: (x) => {
         this.dataSource = new MatTableDataSource(x);
         this.dataSource.paginator = this.paginator;
@@ -147,6 +149,15 @@ export class ClientDashboardComponent implements AfterViewInit {
             this.router.navigateByUrl('/auth/authenticate');
             this.postAuthService.emitLoggedIn();
           });
+      },
+    });
+  }
+
+  ngAfterViewInit(): void {
+    this.authService.getUserId().subscribe({
+      next: (x) => {
+        console.log(x);
+        this.getExpenses(x);
       },
     });
   }

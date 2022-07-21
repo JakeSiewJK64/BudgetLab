@@ -29,11 +29,12 @@ public class ExpenseService {
 		return expenseDao.getAll();
 	}
 
+	public Collection<ExpenseModel> getAllExpensesByUserId(long userid) {
+		return expenseDao.getExpensesByUserId(userid);
+	}
+
 	public long upsertExpense(ExpenseModel expense) {
-		return expenseDao.save(new ExpenseModel(
-				expense.getId(),
-				expense.getDescription(),
-				expense.getDate()));
+		return expenseDao.save(expense);
 	}
 
 }

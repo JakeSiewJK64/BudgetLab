@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthenticationRequestDto } from '../models/AuthenticationRequestDto';
 import { AuthenticationResponseDto } from '../models/AuthenticationResponseDto';
+import { UserModel } from '../models/UserModel';
 import { URL_ENDPOINT } from './constants/endpoint.constant';
 
 @Injectable({
@@ -16,6 +17,12 @@ export class AuthenticationService {
       'Content-Type': 'application/json',
     }),
   };
+
+  getUserId(): Observable<number> {
+    var jwt = localStorage.getItem('token');
+    let url = `${URL_ENDPOINT}/auth/getUser`;
+    return this.http.post<number>(url, jwt, this.httpOptions);
+  }
 
   validateExpiry(requestJwt: String): Observable<Boolean> {
     let url = `${URL_ENDPOINT}/auth/validateTokenExpiry/` + requestJwt;

@@ -40,6 +40,11 @@ public class ExpenditureController {
 		return (List<ExpenseModel>) expenseService.getAllExpense();
 	}
 
+	@GetMapping("/getExpensesByUserId/{userid}")
+	public List<ExpenseModel> getExpensesByUserId(@PathVariable long userid) {
+		return (List<ExpenseModel>) expenseService.getAllExpensesByUserId(userid);
+	}
+
 	@PostMapping("/upsertExpense")
 	public GenericResponseDto upsertExpense(@RequestBody ExpenseModel expense) {
 		return new GenericResponseDto(expenseService.upsertExpense(expense), "Successfully saved expense!");

@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ExpenseDto } from 'src/app/models/ExpenseDto';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DataService } from 'src/app/services/data.service';
 import { ExpenditureService } from 'src/app/services/expenditure.service';
 import { ExpenseEditorComponent } from './expense-editor/expense-editor.component';
@@ -16,11 +17,13 @@ export class ClientExpenditureComponent implements AfterViewInit {
   constructor(
     private _expenseService: ExpenditureService,
     private _dataService: DataService,
+    private authService: AuthenticationService,
     private _matDialog: MatDialog
   ) {}
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   dataSource = new MatTableDataSource<ExpenseDto>();
+  userid: number = 0;
   displayedColumns = ['description', 'total', 'date'];
 
   promptEditor() {
@@ -28,10 +31,13 @@ export class ClientExpenditureComponent implements AfterViewInit {
       .open(ExpenseEditorComponent, {
         width: '800px',
         disableClose: true,
+        data: {
+          useridorigin: this.userid,
+        },
       })
       .afterClosed()
       .subscribe((x) => {
-        this.getExpense();
+        this.getExpenses(this.userid);
       });
   }
 
@@ -54,8 +60,8 @@ export class ClientExpenditureComponent implements AfterViewInit {
     });
   }
 
-  getExpense() {
-    this._expenseService.getExpenses().subscribe({
+  getExpenses(id: number) {
+    this._expenseService.getExpenseByUserId(id).subscribe({
       next: (x) => {
         this.dataSource = new MatTableDataSource(x);
         this.dataSource.paginator = this.paginator;
@@ -67,15 +73,23 @@ export class ClientExpenditureComponent implements AfterViewInit {
     this._matDialog
       .open(ExpenseEditorComponent, {
         width: '800px',
-        data: row,
+        data: {
+          row: row,
+          useridorigin: this.userid,
+        },
       })
       .afterClosed()
-      .subscribe((x) => {
-        this.getExpense();
+      .subscribe((_) => {
+        this.getExpenses(this.userid);
       });
   }
 
   ngAfterViewInit(): void {
-    this.getExpense();
+    this.authService.getUserId().subscribe({
+      next: (x) => {
+        this.userid = x;
+        this.getExpenses(this.userid);
+      },
+    });
   }
 }
