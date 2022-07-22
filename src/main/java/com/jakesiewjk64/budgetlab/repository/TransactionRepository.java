@@ -16,6 +16,6 @@ import com.jakesiewjk64.budgetlab.models.TransactionModel;
 
 @Repository
 public interface TransactionRepository extends JpaRepository<TransactionModel, Long> {
-    @Query(value = "SELECT * FROM transactions WHERE userid = ?1", nativeQuery = true)
+    @Query(value = "SELECT * FROM transactions WHERE userid = ?1 and not isdeleted", nativeQuery = true)
     public List<TransactionModel> findAllByUserId(long userid);
 }

@@ -36,4 +36,10 @@ public class TransactionService {
 	public long upsertTransaction(TransactionModel transaction) {
 		return transactionDao.save(transaction);
 	}
+
+	public long deleteTransaction(long id) {
+		TransactionModel transaction = transactionDao.get(id).get();
+		transaction.setIsdeleted(true);
+		return transactionDao.save(transaction);
+	}
 }

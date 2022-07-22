@@ -27,6 +27,15 @@ public class TransactionModel {
 	private float amount;
 	private String name;
 	private float userid;
+	private boolean isdeleted;
+
+	public boolean isIsdeleted() {
+		return isdeleted;
+	}
+
+	public void setIsdeleted(boolean isdeleted) {
+		this.isdeleted = isdeleted;
+	}
 
 	public long getId() {
 		return id;

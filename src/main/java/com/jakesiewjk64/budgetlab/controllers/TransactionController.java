@@ -48,4 +48,9 @@ public class TransactionController {
 	public long upsertTransaction(@RequestBody TransactionModel transaction) {
 		return transactionService.upsertTransaction(transaction);
 	}
+
+	@PostMapping("/deleteTransaction")
+	public long deleteTransaction(@RequestBody long id) {
+		return transactionService.deleteTransaction(id);
+	}
 }

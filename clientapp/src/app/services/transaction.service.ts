@@ -25,6 +25,21 @@ export class TransactionService {
     );
   }
 
+  deleteTransaction(id: number): Observable<any> {
+    const token = localStorage.getItem('token');
+    var httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: token != null ? `Bearer ${token}` : '',
+      }),
+    };
+    return this.http.post<any>(
+      `${URL_ENDPOINT}/transaction/deleteTransaction`,
+      id,
+      httpOptions
+    );
+  }
+
   getTransactionsByUserId(userid: number): Observable<TransactionDto[]> {
     const token = localStorage.getItem('token');
     var httpOptions = {

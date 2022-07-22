@@ -1,11 +1,13 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { TransactionDto } from 'src/app/models/TransactionDto';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DataService } from 'src/app/services/data.service';
 import { TransactionService } from 'src/app/services/transaction.service';
+import { AlertdialogComponent } from '../../shared/alertdialog/alertdialog.component';
 import { TransactionEditorComponent } from './transaction-editor/transaction-editor.component';
 
 @Component({
@@ -18,11 +20,13 @@ export class ClientTransactionComponent implements AfterViewInit {
     private transactionService: TransactionService,
     private _dialogRef: MatDialog,
     private authService: AuthenticationService,
-    private _dataService: DataService
+    private _dataService: DataService,
+    private _matDialog: MatDialog,
+    private _snackbar: MatSnackBar
   ) {}
   @ViewChild(MatPaginator) paginator: MatPaginator;
   dataSource = new MatTableDataSource<TransactionDto>();
-  displayedColumns = ['name', 'amount'];
+  displayedColumns = ['name', 'amount', 'action'];
   userid: number = 0;
 
   onTableRowClick(row: any) {
@@ -38,6 +42,42 @@ export class ClientTransactionComponent implements AfterViewInit {
       .afterClosed()
       .subscribe((x) => {
         this.getTransactions(this.userid);
+      });
+  }
+
+  deleteTransaction(id: number) {
+    this._matDialog
+      .open(AlertdialogComponent, {
+        data: {
+          title: 'Delete Expense?',
+          message: 'Do you want to delete this expense?',
+        },
+      })
+      .afterClosed()
+      .subscribe({
+        next: (x) => {
+          if (x == 'confirm') {
+            this.transactionService.deleteTransaction(id).subscribe({
+              next: (y) => {
+                this._snackbar.open('Successfully deleted expense!', 'OK', {
+                  duration: 5000,
+                  horizontalPosition: 'end',
+                  verticalPosition: 'bottom',
+                });
+              },
+              error: (err) => {
+                this._snackbar.open('Something went wrong!', 'OK', {
+                  duration: 5000,
+                  horizontalPosition: 'end',
+                  verticalPosition: 'bottom',
+                });
+              },
+              complete: () => {
+                this.getTransactions(this.userid);
+              },
+            });
+          }
+        },
       });
   }
 
