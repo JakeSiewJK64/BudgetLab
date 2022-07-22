@@ -49,8 +49,8 @@ export class ClientTransactionComponent implements AfterViewInit {
     this._matDialog
       .open(AlertdialogComponent, {
         data: {
-          title: 'Delete Expense?',
-          message: 'Do you want to delete this expense?',
+          title: 'Delete transaction?',
+          message: 'Do you want to delete this transaction?',
         },
       })
       .afterClosed()
@@ -59,7 +59,7 @@ export class ClientTransactionComponent implements AfterViewInit {
           if (x == 'confirm') {
             this.transactionService.deleteTransaction(id).subscribe({
               next: (y) => {
-                this._snackbar.open('Successfully deleted expense!', 'OK', {
+                this._snackbar.open('Successfully deleted transaction!', 'OK', {
                   duration: 5000,
                   horizontalPosition: 'end',
                   verticalPosition: 'bottom',
