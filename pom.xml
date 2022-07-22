@@ -13,7 +13,7 @@
 	<name>budgetlab</name>
 	<description>your personal budgeting web app </description>
 	<properties>
-		<java.version>11</java.version>
+		<java.version>17</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
