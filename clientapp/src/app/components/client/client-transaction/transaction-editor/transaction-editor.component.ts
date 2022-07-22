@@ -41,7 +41,7 @@ export class TransactionEditorComponent implements AfterViewInit {
           this.subject,
           this.amount,
           this.selected,
-          this.data == null ? 0 : this.data.id,
+          this.data.row == null ? 0 : this.data.row.id,
           this.data.userid ? this.data.userid : this.data.useridorigin
         )
       )
