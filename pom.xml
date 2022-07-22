@@ -13,9 +13,7 @@
 	<name>budgetlab</name>
 	<description>your personal budgeting web app </description>
 	<properties>
-		<java.version>17</java.version>
-		<maven.compiler.target>17</maven.compiler.target>
-		<maven.compiler.source>17</maven.compiler.source>
+		<java.version>8</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
