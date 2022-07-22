@@ -17,6 +17,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Where;
+
 @Entity
 @Table(name = "Expense")
 public class ExpenseModel {
@@ -30,6 +32,7 @@ public class ExpenseModel {
 	private boolean isdeleted;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "expenseId")
+	@Where(clause = "isdeleted = false")
 	private List<TransactionModel> transaction;
 	
 	public ExpenseModel() {
