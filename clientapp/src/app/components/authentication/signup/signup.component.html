@@ -1,0 +1,46 @@
+<div class="authentication-card w-100">
+    <mat-card class="mx-auto m-2 w-50" fxLayoutAlign="center" fxLayout="column">
+        <h1> Signup </h1>
+        <mat-form-field appearance="outline">
+            <mat-label>Username</mat-label>
+            <input matInput required [(ngModel)]="username">
+            <mat-icon matSuffix>person</mat-icon>
+            <mat-hint>Enter Username</mat-hint>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Password</mat-label>
+            <input matInput required [(ngModel)]="password" type="password">
+            <mat-icon matSuffix>keygen</mat-icon>
+            <mat-hint>Enter Password</mat-hint>
+        </mat-form-field>
+        <div fxLayout="row" fxLayoutGap="10" fxLayoutAlign="center" class="firstlastname-container">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>firstname</mat-label>
+                <input matInput required [(ngModel)]="firstname">
+                <mat-icon matSuffix>edit</mat-icon>
+                <mat-hint>Enter firstname</mat-hint>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>lastname</mat-label>
+                <input matInput required [(ngModel)]="lastname" type="text">
+                <mat-icon matSuffix>tag</mat-icon>
+                <mat-hint>Enter lastname</mat-hint>
+            </mat-form-field>
+        </div>
+        <button mat-raised-button color="warn" (click)="onclick()"
+            disabled="{{ username == '' || password == '' || isProcessing }}">
+            <section *ngIf="isProcessing" fxLayout="row" fxLayoutAlign="center" fxLayoutGap="5">
+                <img src="../../../../assets/img/budgetlabs.png" class="logging-icon" />
+                <span>
+                    Creating Account...
+                </span>
+            </section>
+            <section *ngIf="!isProcessing">
+                Sign Up
+            </section>
+        </button>
+        <a href="/auth/authenticate" class="text-center m-2">
+            Already have an account? Sign in here.
+        </a>
+    </mat-card>
+</div>

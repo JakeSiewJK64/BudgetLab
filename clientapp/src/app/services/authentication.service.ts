@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthenticationRequestDto } from '../models/AuthenticationRequestDto';
 import { AuthenticationResponseDto } from '../models/AuthenticationResponseDto';
+import { SignUpUserDto } from '../models/SignupUserDto';
 import { UserModel } from '../models/UserModel';
 import { URL_ENDPOINT } from './constants/endpoint.constant';
 
@@ -33,6 +34,15 @@ export class AuthenticationService {
     requestBody: AuthenticationRequestDto
   ): Observable<AuthenticationResponseDto> {
     let url = `${URL_ENDPOINT}/auth/authenticate`;
+    return this.http.post<AuthenticationResponseDto>(
+      url,
+      requestBody,
+      this.httpOptions
+    );
+  }
+
+  signUp(requestBody: SignUpUserDto): Observable<AuthenticationResponseDto> {
+    let url = `${URL_ENDPOINT}/auth/register`;
     return this.http.post<AuthenticationResponseDto>(
       url,
       requestBody,

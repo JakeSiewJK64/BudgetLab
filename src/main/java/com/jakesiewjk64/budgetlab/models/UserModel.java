@@ -34,14 +34,14 @@ public class UserModel {
 	
 	
 	@Column(name = "joineddate")
-	private Date joinedDate;
+	private Date joineddate;
 
 	public Date getJoinedDate() {
-		return joinedDate;
+		return joineddate;
 	}
 
 	public void setJoinedDate(Date joinedDate) {
-		this.joinedDate = joinedDate;
+		this.joineddate = joinedDate;
 	}
 
 	public UserModel() {
@@ -52,7 +52,7 @@ public class UserModel {
 		this.password = user.getPassword();
 		this.firstName = user.getFirstName();
 		this.lastName = user.getLastName();
-		this.joinedDate = user.getJoinedDate();
+		this.joineddate = user.getJoinedDate();
 	}
 
 	public String getFirstName() {

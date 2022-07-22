@@ -6,6 +6,8 @@
 
 package com.jakesiewjk64.budgetlab.controllers;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -96,6 +98,7 @@ public class AuthenticationController {
 						new RegisterResponseDto(0l, "This username is taken.", ""));
 			}
 			user = new UserModel(request);
+			user.setJoinedDate(new Date());
 			user.setPassword(passwordEncoder.encode(request.getPassword()));
 			user = userRepository.save(user);
 			authenticateUser(request.getUsername(), request.getPassword());

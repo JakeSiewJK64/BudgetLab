@@ -1,5 +1,6 @@
 import { RouterModule, Routes } from '@angular/router';
 import { AuthenticationComponent } from './authentication-component/authentication.component';
+import { SignupComponent } from './signup/signup.component';
 
 export const routes: Routes = [
   {
@@ -9,6 +10,10 @@ export const routes: Routes = [
   {
     path: 'authenticate',
     component: AuthenticationComponent,
+  },
+  {
+    path: 'signup',
+    component: SignupComponent,
   },
 ];
 

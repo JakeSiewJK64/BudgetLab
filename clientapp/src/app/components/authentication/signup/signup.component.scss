@@ -1,0 +1,29 @@
+.logging-icon {
+    width: 30px;
+    height: auto;
+    animation: spinning 5s linear infinite;
+}
+
+@keyframes spinning {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@media only screen and (min-width: 1000px) {
+    .firstlastname-container {
+        flex-direction: row !important;
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+    .firstlastname-container {
+        flex-direction: column !important;
+    }
+}
+
+.authentication-card {
+    position: absolute;
+    width: 100%;
+    margin-top: 15vw !important;
+}
