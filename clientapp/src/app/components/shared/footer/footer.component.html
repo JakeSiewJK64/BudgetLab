@@ -1,3 +1,15 @@
 <div class="footer-container">
-    <span>Made by JakeSiewJK64</span>
+    <div fxLayoutAlign="center">
+        <div class="m-2 text-center footer-icons">
+            <h1>BudgetLabs</h1>
+            <p>Created by JakeSiewJK64 | {{ date | date: 'yyyy' }}</p>
+            <div fxLayout="row" class="justify-content-center">
+                <section *ngFor="let icon of icons">
+                    <a href="{{icon.route}}">
+                        <img [src]="icon.src" alt="github">
+                    </a>
+                </section>
+            </div>
+        </div>
+    </div>
 </div>
