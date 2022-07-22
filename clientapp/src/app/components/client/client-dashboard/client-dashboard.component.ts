@@ -134,21 +134,21 @@ export class ClientDashboardComponent implements AfterViewInit {
         this.getExpenses(x.userid);
         this.postAuthService.emitUserCallingCard(x.username);
       },
-      error: () => {
+      error: (e) => {
+        if (e.error.subject.includes('JWT expired at')) {
+          e.error.subject = 'Your Session Expired. Please Log in again.';
+        }
         this._snackbar
-          .open(
-            'Unable to fetch user details. Please click OK to sign in again!',
-            'OK',
-            {
-              duration: 5000,
-              horizontalPosition: 'right',
-              verticalPosition: 'bottom',
-            }
-          )
+          .open(`${e.error.subject}`, 'OK', {
+            duration: 5000,
+            horizontalPosition: 'right',
+            verticalPosition: 'bottom',
+          })
           .afterDismissed()
-          .subscribe((_) => {
+          .subscribe((x) => {
+            if (x.dismissedByAction)
+              this.router.navigateByUrl('/auth/authenticate');
             this.clearCache();
-            this.router.navigateByUrl('/auth/authenticate');
             this.postAuthService.emitLoggedIn();
           });
       },

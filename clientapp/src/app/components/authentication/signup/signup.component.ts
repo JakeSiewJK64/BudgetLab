@@ -43,7 +43,7 @@ export class SignupComponent implements AfterViewInit {
           this.firstname,
           this.lastname,
           this.username,
-          this.password,
+          this.password
         )
       )
       .subscribe({
@@ -55,17 +55,13 @@ export class SignupComponent implements AfterViewInit {
             this.router.navigateByUrl('/client/dashboard');
           }
         },
-        error: () => {
+        error: (e) => {
           this.isProcessing = false;
-          this._snackbar.open(
-            'Either your password or username is incorrect. Please sign in again!',
-            'OK',
-            {
-              duration: 5000,
-              horizontalPosition: 'right',
-              verticalPosition: 'bottom',
-            }
-          );
+          this._snackbar.open(`${e.error.message}`, 'OK', {
+            duration: 5000,
+            horizontalPosition: 'right',
+            verticalPosition: 'bottom',
+          });
         },
       });
   }
