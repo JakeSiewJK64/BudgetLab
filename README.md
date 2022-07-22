@@ -5,6 +5,7 @@ BudgetLab is a project that aims to create a web application system to help keep
 
 [![Build Status](https://travis-ci.org/codecentric/springboot-sample-app.svg?branch=master)](https://travis-ci.org/codecentric/springboot-sample-app)
 [![Coverage Status](https://coveralls.io/repos/github/codecentric/springboot-sample-app/badge.svg?branch=master)](https://coveralls.io/github/codecentric/springboot-sample-app?branch=master)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/a7fe13b9-6bd6-4efd-8878-1a018080832d/deploy-status)](https://app.netlify.com/sites/budgetlabs/deploys)
 
 Minimal [Spring Boot](http://projects.spring.io/spring-boot/) app.
 
