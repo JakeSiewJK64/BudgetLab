@@ -28,7 +28,7 @@
             </mat-form-field>
         </div>
         <button mat-raised-button color="warn" (click)="onclick()"
-            disabled="{{ username == '' || password == '' || isProcessing }}">
+            disabled="{{ username == '' || password == '' || firstname == '' || lastname == '' || isProcessing }}">
             <section *ngIf="isProcessing" fxLayout="row" fxLayoutAlign="center" fxLayoutGap="5">
                 <img src="../../../../assets/img/budgetlabs.png" class="logging-icon" />
                 <span>

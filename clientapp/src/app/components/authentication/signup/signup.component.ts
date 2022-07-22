@@ -1,7 +1,6 @@
 import { AfterViewInit, Component } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { AuthenticationRequestDto } from 'src/app/models/AuthenticationRequestDto';
 import { SignUpUserDto } from 'src/app/models/SignupUserDto';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { PostAuthenticateService } from 'src/app/services/ResultsService/post-authenticate-result.service';
