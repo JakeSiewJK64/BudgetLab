@@ -1,1 +1,1 @@
-export const URL_ENDPOINT = 'http://localhost:8080';
+export const URL_ENDPOINT = 'https://budget-labs.herokuapp.com';
