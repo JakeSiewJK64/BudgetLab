@@ -6,6 +6,8 @@
 
 package com.jakesiewjk64.budgetlab.models;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -29,6 +31,18 @@ public class UserModel {
 
 	@Column(name = "lastname")
 	private String lastName;
+	
+	
+	@Column(name = "joineddate")
+	private Date joinedDate;
+
+	public Date getJoinedDate() {
+		return joinedDate;
+	}
+
+	public void setJoinedDate(Date joinedDate) {
+		this.joinedDate = joinedDate;
+	}
 
 	public UserModel() {
 	}
@@ -38,6 +52,7 @@ public class UserModel {
 		this.password = user.getPassword();
 		this.firstName = user.getFirstName();
 		this.lastName = user.getLastName();
+		this.joinedDate = user.getJoinedDate();
 	}
 
 	public String getFirstName() {

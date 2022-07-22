@@ -24,7 +24,11 @@ import com.jakesiewjk64.budgetlab.dto.AuthenticationResponseDto;
 import com.jakesiewjk64.budgetlab.dto.ErrorResponseDto;
 import com.jakesiewjk64.budgetlab.dto.RegisterResponseDto;
 import com.jakesiewjk64.budgetlab.models.UserModel;
+import com.jakesiewjk64.budgetlab.models.UserRole;
+import com.jakesiewjk64.budgetlab.models.UserToRoleModel;
 import com.jakesiewjk64.budgetlab.repository.UserRepository;
+import com.jakesiewjk64.budgetlab.repository.UserRoleBridgeRepository;
+import com.jakesiewjk64.budgetlab.repository.UserRoleRepository;
 import com.jakesiewjk64.budgetlab.services.JwtUserDetailsService;
 import com.jakesiewjk64.budgetlab.services.UserService;
 import com.jakesiewjk64.budgetlab.utils.JwtTokenUtil;
@@ -51,6 +55,12 @@ public class AuthenticationController {
 
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private UserRoleRepository userRoleRepository;
+
+	@Autowired
+	private UserRoleBridgeRepository userRoleBridgeRepository;
 
 	private void authenticateUser(String username, String password) throws Exception {
 		authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
@@ -90,6 +100,8 @@ public class AuthenticationController {
 			user = userRepository.save(user);
 			authenticateUser(request.getUsername(), request.getPassword());
 			final UserDetails userDetails = jwtUserDetailsService.loadUserByUsername(user.getUsername());
+			UserRole userRole = userRoleRepository.findUserRoleByName("User");
+			userRoleBridgeRepository.save(new UserToRoleModel(0l, user.getId(), userRole.getId()));
 			final String jwt = jwtTokenUtil.generateToken(userDetails);
 			return ResponseEntity.ok(new RegisterResponseDto(user.getId(),
 					"Registration Successful for user " + request.getUsername(), jwt));

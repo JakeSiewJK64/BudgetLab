@@ -4,17 +4,19 @@ import java.io.Serializable;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-@SuppressWarnings("serial")
 @Entity
 @Table(name = "usertorolebridge")
 public class UserToRoleModel implements Serializable {
 
-	@Id
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private Long userid;
@@ -24,6 +26,15 @@ public class UserToRoleModel implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "roleid", referencedColumnName = "id", insertable = false, updatable = false)
     private UserRole userRole;
+
+    public UserToRoleModel(Long id, Long userid, Long roleid) {
+        this.id = id;
+        this.userid = userid;
+        this.roleid = roleid;
+    }
+
+    public UserToRoleModel() {
+    }
 
     public Long getId() {
         return id;
