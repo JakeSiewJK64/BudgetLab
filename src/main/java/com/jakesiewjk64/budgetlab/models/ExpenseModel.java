@@ -27,17 +27,27 @@ public class ExpenseModel {
 	private String description;
 	private Date date;
 	private long userid;
-
+	private boolean isdeleted;
+	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "expenseId")
 	private List<TransactionModel> transaction;
-
+	
 	public ExpenseModel() {
 	}
-
+	
 	public ExpenseModel(long id, String description, Date date) {
 		this.id = id;
 		this.description = description;
 		this.date = date;
+		this.isdeleted = false;
+	}
+
+	public boolean getDeleted() {
+		return isdeleted;
+	}
+
+	public void setDeleted(boolean isdeleted) {
+		this.isdeleted = isdeleted;
 	}
 
 	public List<TransactionModel> getTransaction() {

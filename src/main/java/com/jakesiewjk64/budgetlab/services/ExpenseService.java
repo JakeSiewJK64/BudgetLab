@@ -37,4 +37,10 @@ public class ExpenseService {
 		return expenseDao.save(expense);
 	}
 
+	public long deleteExpense(long id) {
+		ExpenseModel model = expenseDao.get(id).get();
+		model.setDeleted(true);
+		return expenseDao.save(model);
+	}
+
 }

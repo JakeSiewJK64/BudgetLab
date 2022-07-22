@@ -1,11 +1,13 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { ExpenseDto } from 'src/app/models/ExpenseDto';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DataService } from 'src/app/services/data.service';
 import { ExpenditureService } from 'src/app/services/expenditure.service';
+import { AlertdialogComponent } from '../../shared/alertdialog/alertdialog.component';
 import { ExpenseEditorComponent } from './expense-editor/expense-editor.component';
 
 @Component({
@@ -18,13 +20,50 @@ export class ClientExpenditureComponent implements AfterViewInit {
     private _expenseService: ExpenditureService,
     private _dataService: DataService,
     private authService: AuthenticationService,
-    private _matDialog: MatDialog
+    private _matDialog: MatDialog,
+    private _snackbar: MatSnackBar
   ) {}
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   dataSource = new MatTableDataSource<ExpenseDto>();
   userid: number = 0;
-  displayedColumns = ['description', 'total', 'date'];
+  displayedColumns = ['description', 'total', 'date', 'action'];
+
+  deleteExpense(id: number) {
+    this._matDialog
+      .open(AlertdialogComponent, {
+        data: {
+          title: 'Delete Expense?',
+          message: 'Do you want to delete this expense?',
+        },
+      })
+      .afterClosed()
+      .subscribe({
+        next: (x) => {
+          if (x == 'confirm') {
+            this._expenseService.deleteExpense(id).subscribe({
+              next: (y) => {
+                this._snackbar.open('Successfully deleted expense!', 'OK', {
+                  duration: 5000,
+                  horizontalPosition: 'end',
+                  verticalPosition: 'bottom',
+                });
+              },
+              error: (err) => {
+                this._snackbar.open('Something went wrong!', 'OK', {
+                  duration: 5000,
+                  horizontalPosition: 'end',
+                  verticalPosition: 'bottom',
+                });
+              },
+              complete: () => {
+                this.getExpenses(this.userid);
+              },
+            });
+          }
+        },
+      });
+  }
 
   promptEditor() {
     this._matDialog

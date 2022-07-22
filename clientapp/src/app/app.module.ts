@@ -10,6 +10,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FooterComponent } from './components/shared/footer/footer.component';
 import { DatePipe } from '@angular/common';
 import { AuthGuardService } from './services/auth-guard.service';
+import { AlertdialogComponent } from './components/shared/alertdialog/alertdialog.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { AuthGuardService } from './services/auth-guard.service';
     AdmindashboardComponent,
     NotfoundComponent,
     FooterComponent,
+    AlertdialogComponent,
   ],
   imports: [
     BrowserModule,

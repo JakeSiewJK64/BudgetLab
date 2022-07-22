@@ -10,6 +10,18 @@ import { URL_ENDPOINT } from './constants/endpoint.constant';
 export class ExpenditureService {
   constructor(private http: HttpClient) {}
 
+  deleteExpense(expenseid: number) {
+    const token = localStorage.getItem('token');
+    var url = `${URL_ENDPOINT}/expense/deleteExpense`;
+    var httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: token != null ? `Bearer ${token}` : '',
+      }),
+    };
+    return this.http.post<any>(url, expenseid, httpOptions);
+  }
+
   saveExpenses(expense: ExpenseDto): Observable<any> {
     const token = localStorage.getItem('token');
     var url = `${URL_ENDPOINT}/expense/upsertExpense`;

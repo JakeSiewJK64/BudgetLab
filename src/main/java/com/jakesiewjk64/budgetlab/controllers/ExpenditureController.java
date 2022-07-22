@@ -49,4 +49,9 @@ public class ExpenditureController {
 	public GenericResponseDto upsertExpense(@RequestBody ExpenseModel expense) {
 		return new GenericResponseDto(expenseService.upsertExpense(expense), "Successfully saved expense!");
 	}
+
+	@PostMapping("/deleteExpense")
+	public GenericResponseDto deleteExpense(@RequestBody long id) {
+		return new GenericResponseDto(expenseService.deleteExpense(id), "Successfully deleted expense!");
+	}
 }

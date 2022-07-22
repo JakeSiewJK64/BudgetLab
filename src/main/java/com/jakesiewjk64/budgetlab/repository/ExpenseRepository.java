@@ -16,6 +16,6 @@ import com.jakesiewjk64.budgetlab.models.ExpenseModel;
 
 @Repository
 public interface ExpenseRepository extends JpaRepository<ExpenseModel, Long> {
-    @Query(value = "SELECT * FROM expense WHERE userid = ?1", nativeQuery = true)
+    @Query(value = "SELECT * FROM expense WHERE userid = ?1 and not isdeleted", nativeQuery = true)
     public List<ExpenseModel> findExpensesByUserId(long userid);
 }
