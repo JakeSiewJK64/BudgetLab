@@ -28,13 +28,15 @@ public class UserService {
     public UserDto getUserById(long id) {
         UserModel user = userDao.get(id).get();
         String[] role = userRoleBridgeRepository.findUserRoleByUserId(id);
-        return new UserDto(user.getUsername(), user.getId(), role, user.getFirstName(), user.getLastName());
+        return new UserDto(user.getUsername(), user.getId(), role, user.getFirstName(), user.getLastName(),
+                user.getJoinedDate());
     }
 
     public UserDto getUserByUsername(String username) {
         UserModel user = userDao.getUserByUsername(username);
         String role[] = userRoleBridgeRepository.findUserRoleByUserId(user.getId());
-        return new UserDto(user.getUsername(), user.getId(), role, user.getFirstName(), user.getLastName());
+        return new UserDto(user.getUsername(), user.getId(), role, user.getFirstName(), user.getLastName(),
+                user.getJoinedDate());
     }
 
     public Collection<UserModel> getAllUsers() {

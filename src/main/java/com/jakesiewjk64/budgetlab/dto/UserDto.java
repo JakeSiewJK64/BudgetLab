@@ -6,19 +6,31 @@
 
 package com.jakesiewjk64.budgetlab.dto;
 
+import java.util.Date;
+
 public class UserDto {
 	private String username;
 	private long userid;
 	private String[] role;
 	private String firstname;
 	private String lastname;
+	private Date joineddate;
 
-	public UserDto(String username, long userid, String[] role, String firstname, String lastname) {
+	public UserDto(String username, long userid, String[] role, String firstname, String lastname, Date joineddate) {
 		this.username = username;
+		this.joineddate = joineddate;
 		this.userid = userid;
 		this.role = role;
 		this.firstname = firstname;
 		this.lastname = lastname;
+	}
+
+	public Date getJoineddate() {
+		return joineddate;
+	}
+
+	public void setJoineddate(Date joineddate) {
+		this.joineddate = joineddate;
 	}
 
 	public String getFirstname() {

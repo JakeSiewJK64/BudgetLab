@@ -8,13 +8,18 @@
                 </div>
             </mat-card>
             <mat-card class="mat-elevation-z0 w-75">
-                <div class="flex-row-reverse" fxLayout="row">
-                    <div *ngFor="let role of user.role">
-                        <div
-                            [ngClass]="role == 'Admin' ? 'badge badge-pill bg-danger m-1' : 'badge badge-pill bg-primary m-1' ">
-                            <strong style="font-size: 1rem;">{{ role }}</strong>
+                <div fxLayout="column">
+                    <div class="flex-row-reverse" fxLayout="row">
+                        <div *ngFor="let role of user.role">
+                            <div
+                                [ngClass]="role == 'Admin' ? 'badge badge-pill bg-danger m-1' : 'badge badge-pill bg-primary m-1' ">
+                                <strong style="font-size: 1rem;">{{ role }}</strong>
+                            </div>
                         </div>
                     </div>
+                    <strong style="font-size: 1rem; text-align: end;">
+                        Joined On: {{ user.joineddate | date: 'YYYY-MM-dd' }}
+                    </strong>
                 </div>
                 <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Username</mat-label>
