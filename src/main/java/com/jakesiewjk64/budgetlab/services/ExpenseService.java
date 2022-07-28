@@ -6,9 +6,16 @@
 
 package com.jakesiewjk64.budgetlab.services;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,4 +50,30 @@ public class ExpenseService {
 		return expenseDao.save(model);
 	}
 
+	public void generateCSV(HttpServletResponse response) throws IOException {
+		generateExpenseCSV(response.getWriter());
+	}
+
+	private void generateExpenseCSV(PrintWriter printWriter) {
+
+		try {
+			CSVPrinter csvPrinter = new CSVPrinter(printWriter, CSVFormat.RFC4180);
+			Collection<ExpenseModel> expenses = expenseDao.getAll();
+			csvPrinter.printRecord("Description", "Date", "Total");
+			for (ExpenseModel expense : expenses) {
+				csvPrinter.printRecord(
+						Arrays.asList(
+								expense.getDescription(),
+								expense.getDate(),
+								expense.getTotal()));
+			}
+			csvPrinter.flush();
+			csvPrinter.close();
+		} catch (Exception e) {
+			// TODO: handle exception
+		} finally {
+			printWriter.flush();
+			printWriter.close();
+		}
+	}
 }

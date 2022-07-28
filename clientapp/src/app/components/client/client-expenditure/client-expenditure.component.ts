@@ -22,12 +22,23 @@ export class ClientExpenditureComponent implements AfterViewInit {
     private authService: AuthenticationService,
     private _matDialog: MatDialog,
     private _snackbar: MatSnackBar
-  ) {}
+  ) { }
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   dataSource = new MatTableDataSource<ExpenseDto>();
   userid: number = 0;
   displayedColumns = ['description', 'total', 'date', 'action'];
+
+
+  exportExpenseCSV() {
+    this._expenseService.exportExpenseCSV().subscribe({
+      next: (x) => {
+        const blob = new Blob([x], { type: "text/csv" });
+        const url = window.URL.createObjectURL(blob);
+        window.open(url);
+      }
+    });
+  }
 
   deleteExpense(id: number) {
     this._matDialog

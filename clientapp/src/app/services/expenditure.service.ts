@@ -57,4 +57,16 @@ export class ExpenditureService {
     };
     return this.http.get<ExpenseDto[]>(url, httpOptions);
   }
+
+  exportExpenseCSV(): Observable<any> {
+    const token = localStorage.getItem('token');
+    var url = `${URL_ENDPOINT}/expense/exportExpenseCSV`;
+    var httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: token != null ? `Bearer ${token}` : '',
+      }),
+    };
+    return this.http.get<any>(url, httpOptions);
+  }
 }

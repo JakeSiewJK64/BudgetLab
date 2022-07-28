@@ -6,8 +6,14 @@
 
 package com.jakesiewjk64.budgetlab.controllers;
 
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -53,5 +59,20 @@ public class ExpenditureController {
 	@PostMapping("/deleteExpense")
 	public GenericResponseDto deleteExpense(@RequestBody long id) {
 		return new GenericResponseDto(expenseService.deleteExpense(id), "Successfully deleted expense!");
+	}
+
+	@GetMapping("/exportExpenseCSV")
+	public void exportExpenseCSV(HttpServletResponse response) throws IOException {
+		try {
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			String headerKey = "Content-Description";
+			String headerValue = "attachment; filename=Expense_" + dateFormat.format(new Date()) + ".csv";
+			response.setContentType("application/octet-stream");
+			response.setHeader(headerKey, headerValue);
+
+			expenseService.generateCSV(response);
+		} catch (Exception e) {
+			response.sendError(0, e.toString());
+		}
 	}
 }
