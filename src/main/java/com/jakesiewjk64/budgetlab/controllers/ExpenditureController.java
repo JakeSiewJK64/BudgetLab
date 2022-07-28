@@ -65,11 +65,9 @@ public class ExpenditureController {
 	public void exportExpenseCSV(HttpServletResponse response) throws IOException {
 		try {
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-			String headerKey = "Content-Description";
-			String headerValue = "attachment; filename=Expense_" + dateFormat.format(new Date()) + ".csv";
-			response.setContentType("application/octet-stream");
-			response.setHeader(headerKey, headerValue);
-
+			String filename = "Expense_" + dateFormat.format(new Date()) + ".csv";
+			response.setContentType("text/csv");
+			response.addHeader("Content-Disposition", "attachment; filename=" + filename);
 			expenseService.generateCSV(response);
 		} catch (Exception e) {
 			response.sendError(0, e.toString());

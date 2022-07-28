@@ -8,6 +8,8 @@ package com.jakesiewjk64.budgetlab.services;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Optional;
@@ -59,12 +61,13 @@ public class ExpenseService {
 		try {
 			CSVPrinter csvPrinter = new CSVPrinter(printWriter, CSVFormat.RFC4180);
 			Collection<ExpenseModel> expenses = expenseDao.getAll();
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			csvPrinter.printRecord("Description", "Date", "Total");
 			for (ExpenseModel expense : expenses) {
 				csvPrinter.printRecord(
 						Arrays.asList(
 								expense.getDescription(),
-								expense.getDate(),
+								dateFormat.format(expense.getDate()),
 								expense.getTotal()));
 			}
 			csvPrinter.flush();

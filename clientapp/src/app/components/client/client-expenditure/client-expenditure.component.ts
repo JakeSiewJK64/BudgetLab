@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
@@ -17,6 +18,7 @@ import { ExpenseEditorComponent } from './expense-editor/expense-editor.componen
 })
 export class ClientExpenditureComponent implements AfterViewInit {
   constructor(
+    private datePipe: DatePipe,
     private _expenseService: ExpenditureService,
     private _dataService: DataService,
     private authService: AuthenticationService,
@@ -29,14 +31,16 @@ export class ClientExpenditureComponent implements AfterViewInit {
   userid: number = 0;
   displayedColumns = ['description', 'total', 'date', 'action'];
 
-
   exportExpenseCSV() {
-    this._expenseService.exportExpenseCSV().subscribe({
-      next: (x) => {
-        const blob = new Blob([x], { type: "text/csv" });
-        const url = window.URL.createObjectURL(blob);
-        window.open(url);
-      }
+    this._expenseService.exportExpenseCSV().subscribe(x => {
+      var url = window.URL.createObjectURL(x.body);
+      var a = document.createElement('a');
+      document.body.appendChild(a);
+      a.href = url;
+      a.download = `Expense_${this.datePipe.transform(new Date(), "yyyy-MM-dd")}.csv`;
+      a.click();
+      window.URL.revokeObjectURL(url);
+      a.remove();
     });
   }
 

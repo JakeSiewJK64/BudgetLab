@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ExpenseDto } from '../models/ExpenseDto';
@@ -8,7 +8,7 @@ import { URL_ENDPOINT } from './constants/endpoint.constant';
   providedIn: 'root',
 })
 export class ExpenditureService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   deleteExpense(expenseid: number) {
     const token = localStorage.getItem('token');
@@ -67,6 +67,10 @@ export class ExpenditureService {
         Authorization: token != null ? `Bearer ${token}` : '',
       }),
     };
-    return this.http.get<any>(url, httpOptions);
+    return this.http.get(url, {
+      headers: httpOptions.headers,
+      responseType: "blob",
+      observe: "response",      
+    });
   }
 }
