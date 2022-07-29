@@ -53,6 +53,7 @@ public class SecurityConfigurer {
             "/transaction/getTransactionById/**",
             "/transaction/deleteTransaction/**",
             "/transaction/exportTransactionCSV/**",
+            "/transaction/exportTransactionExcel/**",
     };
 
     @Bean

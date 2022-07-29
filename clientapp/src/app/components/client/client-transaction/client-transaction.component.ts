@@ -39,6 +39,15 @@ export class ClientTransactionComponent implements AfterViewInit {
       }
     })
   }
+  
+  exportTransactionExcel() {
+    this.transactionService.exportTransactionExcel(this.userid).subscribe({
+      next: x => {
+        var filename: string = `Transaction_${this.datePipe.transform(new Date(), 'yyyy-MM-dd')}.xlsx`;
+        this._dataService.downloadManager(filename, x);
+      }
+    })
+  }
 
   onTableRowClick(row: any) {
     this._dialogRef
