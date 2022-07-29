@@ -52,15 +52,15 @@ public class ExpenseService {
 		return expenseDao.save(model);
 	}
 
-	public void generateCSV(HttpServletResponse response) throws IOException {
-		generateExpenseCSV(response.getWriter());
+	public void generateCSV(long id, HttpServletResponse response) throws IOException {
+		generateExpenseCSV(id, response.getWriter());
 	}
 
-	private void generateExpenseCSV(PrintWriter printWriter) {
+	private void generateExpenseCSV(long id, PrintWriter printWriter) {
 
 		try {
 			CSVPrinter csvPrinter = new CSVPrinter(printWriter, CSVFormat.RFC4180);
-			Collection<ExpenseModel> expenses = expenseDao.getAll();
+			Collection<ExpenseModel> expenses = expenseDao.getExpensesByUserId(id);
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			csvPrinter.printRecord("Description", "Date", "Total");
 			for (ExpenseModel expense : expenses) {

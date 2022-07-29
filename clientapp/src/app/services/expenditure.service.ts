@@ -58,9 +58,9 @@ export class ExpenditureService {
     return this.http.get<ExpenseDto[]>(url, httpOptions);
   }
 
-  exportExpenseCSV(): Observable<any> {
+  exportExpenseCSV(id: number): Observable<any> {
     const token = localStorage.getItem('token');
-    var url = `${URL_ENDPOINT}/expense/exportExpenseCSV`;
+    var url = `${URL_ENDPOINT}/expense/exportExpenseCSV/${id}`;
     var httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',

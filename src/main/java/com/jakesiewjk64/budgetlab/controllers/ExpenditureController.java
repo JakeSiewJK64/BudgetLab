@@ -61,14 +61,14 @@ public class ExpenditureController {
 		return new GenericResponseDto(expenseService.deleteExpense(id), "Successfully deleted expense!");
 	}
 
-	@GetMapping("/exportExpenseCSV")
-	public void exportExpenseCSV(HttpServletResponse response) throws IOException {
+	@GetMapping("/exportExpenseCSV/{id}")
+	public void exportExpenseCSV(@PathVariable long id,HttpServletResponse response) throws IOException {
 		try {
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			String filename = "Expense_" + dateFormat.format(new Date()) + ".csv";
 			response.setContentType("text/csv");
 			response.addHeader("Content-Disposition", "attachment; filename=" + filename);
-			expenseService.generateCSV(response);
+			expenseService.generateCSV(id, response);
 		} catch (Exception e) {
 			response.sendError(0, e.toString());
 		}

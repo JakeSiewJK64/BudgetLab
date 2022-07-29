@@ -32,7 +32,7 @@ export class ClientExpenditureComponent implements AfterViewInit {
   displayedColumns = ['description', 'total', 'date', 'action'];
 
   exportExpenseCSV() {
-    this._expenseService.exportExpenseCSV().subscribe(x => {
+    this._expenseService.exportExpenseCSV(this.userid).subscribe(x => {
       var url = window.URL.createObjectURL(x.body);
       var a = document.createElement('a');
       document.body.appendChild(a);

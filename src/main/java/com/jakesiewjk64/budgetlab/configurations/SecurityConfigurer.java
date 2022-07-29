@@ -45,6 +45,7 @@ public class SecurityConfigurer {
             "/expense/getExpensesByUserId/**",
             "/expense/getExpenseById/**",
             "/expense/upsertExpense/**",
+            "/expense/exportExpenseCSV/**",
             "/transaction/getAllTransactionsByUserId/**",
             "/transaction/upsertTransaction/**",
             "/transaction/getTransactionById/**",

@@ -3,7 +3,7 @@
         <h1>My Expenditure</h1>
         <div class="ms-auto" fxLayoutGap="5">
             <button mat-flat-button class="bg-warning" (click)="promptEditor()">Add Expenditure</button>
-            <button mat-flat-button class="bg-success text-white" (click)="exportExpenseCSV()">Export to CSV</button>
+            <button mat-flat-button class="bg-success text-white" (click)="exportExpenseCSV()" *ngIf="dataSource.data.length > 0">Export to CSV</button>
         </div>
     </div>
     <div *ngIf="dataSource.data.length == 0" class="text-center">
