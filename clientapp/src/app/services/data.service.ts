@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class DataService {
-  constructor(private datePipe: DatePipe) {}
+  constructor(private datePipe: DatePipe) { }
 
   compare(
     a: number | string | Date,
@@ -29,5 +29,16 @@ export class DataService {
 
   pipeDateDay(date: Date) {
     return this.datePipe.transform(date, 'dd');
+  }
+
+  downloadManager(filename: string, body: any) {
+    var url = window.URL.createObjectURL(body.body);
+    var a = document.createElement('a');
+    document.body.appendChild(a);
+    a.href = url;
+    a.download = filename;
+    a.click();
+    window.URL.revokeObjectURL(url);
+    a.remove();
   }
 }

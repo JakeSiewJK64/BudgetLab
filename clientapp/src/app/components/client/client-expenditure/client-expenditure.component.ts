@@ -33,14 +33,8 @@ export class ClientExpenditureComponent implements AfterViewInit {
 
   exportExpenseCSV() {
     this._expenseService.exportExpenseCSV(this.userid).subscribe(x => {
-      var url = window.URL.createObjectURL(x.body);
-      var a = document.createElement('a');
-      document.body.appendChild(a);
-      a.href = url;
-      a.download = `Expense_${this.datePipe.transform(new Date(), "yyyy-MM-dd")}.csv`;
-      a.click();
-      window.URL.revokeObjectURL(url);
-      a.remove();
+      var filename: string = `Expense_${this.datePipe.transform(new Date(), "yyyy-MM-dd")}.csv`;
+      this._dataService.downloadManager(filename, x);
     });
   }
 

@@ -34,14 +34,8 @@ export class ClientTransactionComponent implements AfterViewInit {
   exportTransactionCSV() {
     this.transactionService.exportTransactionCSV(this.userid).subscribe({
       next: x => {
-        var url = window.URL.createObjectURL(x.body);
-        var a = document.createElement('a');
-        document.body.appendChild(a);
-        a.href = url;
-        a.download = `Transaction_${this.datePipe.transform(new Date(), 'yyyy-MM-dd')}.csv`;
-        a.click();
-        window.URL.revokeObjectURL(url);
-        a.remove();
+        var filename: string = `Transaction_${this.datePipe.transform(new Date(), 'yyyy-MM-dd')}.csv`;
+        this._dataService.downloadManager(filename, x);
       }
     })
   }
