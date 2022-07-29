@@ -20,7 +20,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,10 +87,15 @@ public class ExpenseService {
 		}
 	}
 
-	private void createCell(Row row, int columnCount, Object value, XSSFSheet sheet) {
+	private Cell createCell(Row row, int columnCount, Object value, XSSFSheet sheet) {
 		sheet.autoSizeColumn(columnCount);
 		Cell cell = row.createCell(columnCount);
 		cell.setCellValue(value.toString());
+		return cell;
+	}
+
+	private void setHeaderStyle(Cell cell, CellStyle style) {
+		cell.setCellStyle(style);
 	}
 
 	private void writeData(Collection<ExpenseModel> expenses, XSSFSheet sheet) {
@@ -100,6 +107,24 @@ public class ExpenseService {
 			createCell(row, columnCount++, expense.getDescription(), sheet);
 			createCell(row, columnCount++, expense.getTotal(), sheet);
 			createCell(row, columnCount++, dateFormat.format(expense.getDate()), sheet);
+		}
+	}
+
+	private CellStyle getHeaderStyle(XSSFWorkbook workbook) {
+		CellStyle style = workbook.createCellStyle();
+		XSSFFont font = workbook.createFont();
+		font.setBold(true);
+		font.setFontHeight(16);
+		style.setFont(font);
+		return style;
+	}
+
+	private void writeHeader(Row row, int columnCount, XSSFWorkbook workbook, XSSFSheet sheet) {
+		String[] headers = new String[] { "Description", "Total", "Date" };		
+		CellStyle style = getHeaderStyle(workbook);
+		for (String header : headers) {
+			Cell cell = createCell(row, columnCount++, header, sheet);
+			setHeaderStyle(cell, style);
 		}
 	}
 
@@ -116,9 +141,7 @@ public class ExpenseService {
 			sheet.autoSizeColumn(columnCount);
 
 			// todo: write header
-			createCell(row, columnCount++, "Description", sheet);
-			createCell(row, columnCount++, "Total", sheet);
-			createCell(row, columnCount++, "Date", sheet);
+			writeHeader(row, columnCount, workbook, sheet);
 
 			// todo: write data
 			writeData(expenses, sheet);
