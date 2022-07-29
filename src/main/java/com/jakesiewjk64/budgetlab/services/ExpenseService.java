@@ -120,7 +120,7 @@ public class ExpenseService {
 	}
 
 	private void writeHeader(Row row, int columnCount, XSSFWorkbook workbook, XSSFSheet sheet) {
-		String[] headers = new String[] { "Description", "Total", "Date" };		
+		String[] headers = new String[] { "Description", "Total", "Date" };
 		CellStyle style = getHeaderStyle(workbook);
 		for (String header : headers) {
 			Cell cell = createCell(row, columnCount++, header, sheet);
@@ -129,28 +129,22 @@ public class ExpenseService {
 	}
 
 	public void generateExcel(long id, HttpServletResponse response) throws IOException {
+		Collection<ExpenseModel> expenses = expenseDao.getExpensesByUserId(id);
+		XSSFWorkbook workbook = new XSSFWorkbook();
+		ServletOutputStream servletOutputStream = response.getOutputStream();
+		XSSFSheet sheet = workbook.createSheet();
+		Row row = sheet.createRow(0);
+		int columnCount = 0;
 		try {
-			Collection<ExpenseModel> expenses = expenseDao.getExpensesByUserId(id);
-			XSSFWorkbook workbook = new XSSFWorkbook();
-			ServletOutputStream servletOutputStream = response.getOutputStream();
-			XSSFSheet sheet = workbook.createSheet();
-			Row row = sheet.createRow(0);
-			int columnCount = 0;
-
-			// todo: create cells
 			sheet.autoSizeColumn(columnCount);
-
-			// todo: write header
 			writeHeader(row, columnCount, workbook, sheet);
-
-			// todo: write data
 			writeData(expenses, sheet);
-
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
 			workbook.write(servletOutputStream);
 			workbook.close();
 			servletOutputStream.close();
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
 	}
 }

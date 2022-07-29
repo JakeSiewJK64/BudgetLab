@@ -68,7 +68,20 @@ public class TransactionController {
 			response.addHeader("Content-Disposition", "attachment; filename=" + filename);
 			transactionService.exportTransactionCSV(id, response);
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
+		}
+	}
+
+	@GetMapping("/exportTransactionExcel/{id}")
+	public void exportTransactionExcel(@PathVariable long id, HttpServletResponse response) {
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		String filename = "Transaction_" + dateFormat.format(new Date()) + ".xlsx";
+		try {
+			response.setContentType("text/excel");
+			response.addHeader("Content-Disposition", "attachment; filename=" + filename);
+			transactionService.exportTransactionExcel(id, response);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 }

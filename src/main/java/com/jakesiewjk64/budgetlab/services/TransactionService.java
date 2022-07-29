@@ -12,10 +12,17 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFFont;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -68,6 +75,65 @@ public class TransactionService {
 			printer.close();
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+
+	private Cell createCell(Row row, int columnCount, Object value, XSSFSheet sheet) {
+		sheet.autoSizeColumn(columnCount);
+		Cell cell = row.createCell(columnCount);
+		cell.setCellValue(value.toString());
+		return cell;
+	}
+
+	private void setHeaderStyle(Cell cell, CellStyle style) {
+		cell.setCellStyle(style);
+	}
+
+	private CellStyle getHeaderStyle(XSSFWorkbook workbook) {
+		CellStyle style = workbook.createCellStyle();
+		XSSFFont font = workbook.createFont();
+		font.setBold(true);
+		font.setFontHeight(16);
+		style.setFont(font);
+		return style;
+	}
+
+	private void writeHeader(Row row, int columnCount, XSSFWorkbook workbook, XSSFSheet sheet) {
+		String[] headers = new String[] { "Name", "Amount" };
+		CellStyle style = getHeaderStyle(workbook);
+		for (String header : headers) {
+			Cell cell = createCell(row, columnCount++, header, sheet);
+			setHeaderStyle(cell, style);
+		}
+	}
+
+	private void writeData(Collection<TransactionModel> transactions, XSSFSheet sheet) {
+		int rowCount = 1;
+		for (TransactionModel transaction : transactions) {
+			Row row = sheet.createRow(rowCount++);
+			int columnCount = 0;
+			createCell(row, columnCount++, transaction.getName(), sheet);
+			createCell(row, columnCount++, transaction.getAmount(), sheet);
+		}
+	}
+
+	public void exportTransactionExcel(long id, HttpServletResponse response) throws IOException {
+		Collection<TransactionModel> transactions = transactionDao.getAllByUserId((int) id);
+		XSSFWorkbook workbook = new XSSFWorkbook();
+		ServletOutputStream servletOutputStream = response.getOutputStream();
+		XSSFSheet sheet = workbook.createSheet();
+		Row row = sheet.createRow(0);
+		int columnCount = 0;
+		try {
+			sheet.autoSizeColumn(columnCount);
+			writeHeader(row, columnCount, workbook, sheet);
+			writeData(transactions, sheet);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			workbook.write(servletOutputStream);
+			workbook.close();
+			servletOutputStream.close();
 		}
 	}
 }
