@@ -45,10 +45,13 @@ public class SecurityConfigurer {
             "/expense/getExpensesByUserId/**",
             "/expense/getExpenseById/**",
             "/expense/upsertExpense/**",
+            "/expense/deleteExpense/**",
             "/expense/exportExpenseCSV/**",
             "/transaction/getAllTransactionsByUserId/**",
             "/transaction/upsertTransaction/**",
             "/transaction/getTransactionById/**",
+            "/transaction/deleteTransaction/**",
+            "/transaction/exportTransactionCSV/**",
     };
 
     @Bean

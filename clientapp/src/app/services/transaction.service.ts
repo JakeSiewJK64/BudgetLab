@@ -8,7 +8,7 @@ import { URL_ENDPOINT } from './constants/endpoint.constant';
   providedIn: 'root',
 })
 export class TransactionService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   upsertTransaction(transaction: TransactionDto): Observable<number> {
     const token = localStorage.getItem('token');
@@ -65,6 +65,23 @@ export class TransactionService {
     return this.http.get<TransactionDto[]>(
       `${URL_ENDPOINT}/transaction/getAllTransactions`,
       httpOptions
+    );
+  }
+  exportTransactionCSV(id: number): Observable<any> {
+    const token = localStorage.getItem('token');
+    var httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: token != null ? `Bearer ${token}` : '',
+      }),
+    };
+    return this.http.get(
+      `${URL_ENDPOINT}/transaction/exportTransactionCSV/${id}`,
+      {
+        headers: httpOptions.headers,
+        responseType: "blob",
+        observe: "response"
+      }
     );
   }
 }

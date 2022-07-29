@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
@@ -22,12 +23,28 @@ export class ClientTransactionComponent implements AfterViewInit {
     private authService: AuthenticationService,
     private _dataService: DataService,
     private _matDialog: MatDialog,
-    private _snackbar: MatSnackBar
-  ) {}
+    private _snackbar: MatSnackBar,
+    private datePipe: DatePipe,
+  ) { }
   @ViewChild(MatPaginator) paginator: MatPaginator;
   dataSource = new MatTableDataSource<TransactionDto>();
   displayedColumns = ['name', 'amount', 'action'];
   userid: number = 0;
+
+  exportTransactionCSV() {
+    this.transactionService.exportTransactionCSV(this.userid).subscribe({
+      next: x => {
+        var url = window.URL.createObjectURL(x.body);
+        var a = document.createElement('a');
+        document.body.appendChild(a);
+        a.href = url;
+        a.download = `Transaction_${this.datePipe.transform(new Date(), 'yyyy-MM-dd')}.csv`;
+        a.click();
+        window.URL.revokeObjectURL(url);
+        a.remove();
+      }
+    })
+  }
 
   onTableRowClick(row: any) {
     this._dialogRef

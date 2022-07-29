@@ -1,8 +1,9 @@
 <div class="m-2">
     <div fxLayoutAlign="row">
         <h1>My Transactions</h1>
-        <div class="ms-auto">
+        <div class="ms-auto" fxLayoutGap="5">
             <button mat-flat-button class="bg-warning" (click)="promptEditor()">Add Transaction</button>
+            <button mat-flat-button class="bg-success text-white" (click)="exportTransactionCSV()" *ngIf="dataSource.data.length > 0">Add Transaction</button>
         </div>
     </div>
     <div *ngIf="dataSource.data.length == 0" class="text-center">

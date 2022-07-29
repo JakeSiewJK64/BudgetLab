@@ -6,8 +6,13 @@
 
 package com.jakesiewjk64.budgetlab.controllers;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -52,5 +57,18 @@ public class TransactionController {
 	@PostMapping("/deleteTransaction")
 	public long deleteTransaction(@RequestBody long id) {
 		return transactionService.deleteTransaction(id);
+	}
+
+	@GetMapping("/exportTransactionCSV/{id}")
+	public void exportTransactionCSV(@PathVariable long id, HttpServletResponse response) {
+		try {
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			String filename = "Transaction_" + dateFormat.format(new Date()) + ".csv";
+			response.setContentType("text/csv");
+			response.addHeader("Content-Disposition", "attachment; filename=" + filename);
+			transactionService.exportTransactionCSV(id, response);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 }
