@@ -73,4 +73,20 @@ export class ExpenditureService {
       observe: "response",      
     });
   }
+  
+  exportExpenseExcel(id: number): Observable<any> {
+    const token = localStorage.getItem('token');
+    var url = `${URL_ENDPOINT}/expense/exportExpenseExcel/${id}`;
+    var httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: token != null ? `Bearer ${token}` : '',
+      }),
+    };
+    return this.http.get(url, {
+      headers: httpOptions.headers,
+      responseType: "blob",
+      observe: "response",      
+    });
+  }
 }

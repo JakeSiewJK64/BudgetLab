@@ -38,6 +38,13 @@ export class ClientExpenditureComponent implements AfterViewInit {
     });
   }
 
+  exportExpenseExcel() {
+    this._expenseService.exportExpenseExcel(this.userid).subscribe(x => {
+      var filename: string = `Expense_${this.datePipe.transform(new Date(), "yyyy-MM-dd")}.xlsx`;
+      this._dataService.downloadManager(filename, x);
+    });
+  }
+
   deleteExpense(id: number) {
     this._matDialog
       .open(AlertdialogComponent, {
