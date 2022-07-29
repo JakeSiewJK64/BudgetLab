@@ -73,4 +73,17 @@ public class ExpenditureController {
 			response.sendError(0, e.toString());
 		}
 	}
+	
+	@GetMapping("/exportExpenseExcel/{id}")
+	public void exportExpenseExcel(@PathVariable long id,HttpServletResponse response) throws IOException {
+		try {
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			String filename = "Expense_" + dateFormat.format(new Date()) + ".xlsx";
+			response.setContentType("text/excel");
+			response.addHeader("Content-Disposition", "attachment; filename=" + filename);
+			expenseService.generateExcel(id, response);
+		} catch (Exception e) {
+			response.sendError(0, e.toString());
+		}
+	}
 }
