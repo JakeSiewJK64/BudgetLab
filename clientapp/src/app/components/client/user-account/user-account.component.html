@@ -4,7 +4,7 @@
         <div fxLayout="row" fxLayoutGap="15" class="profile-section" *ngIf="user">
             <mat-card class="mat-elevation-z0 text-center profile-container">
                 <div class="rounded-circle">
-                    <img (click)="triggerFileUpload()" [src]="file != null ? file : '../../../../assets/img/empty.png'"
+                    <img (click)="triggerFileUpload()" [src]="user.profileimage ? user.profileimage : file != null ? file : '../../../../assets/img/empty.png'"
                         class="profile-image-container" alt="profile">
                     <input type="file" id="file-profile" (change)="promptFileSelect($event)" style="display: none;">
                 </div>
