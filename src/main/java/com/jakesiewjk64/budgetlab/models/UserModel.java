@@ -15,6 +15,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.jakesiewjk64.budgetlab.dto.UserDto;
+
 @Entity
 @Table(name = "Users")
 public class UserModel {
@@ -25,14 +27,22 @@ public class UserModel {
 
 	private String username;
 	private String password;
+	private String profileimage;
+
+	public String getProfileimage() {
+		return profileimage;
+	}
+
+	public void setProfileimage(String profileimage) {
+		this.profileimage = profileimage;
+	}
 
 	@Column(name = "firstname")
 	private String firstName;
 
 	@Column(name = "lastname")
 	private String lastName;
-	
-	
+
 	@Column(name = "joineddate")
 	private Date joineddate;
 
@@ -50,24 +60,33 @@ public class UserModel {
 	public UserModel(UserModel user) {
 		this.username = user.getUsername();
 		this.password = user.getPassword();
-		this.firstName = user.getFirstName();
-		this.lastName = user.getLastName();
+		this.firstName = user.getFirstname();
+		this.lastName = user.getLastname();
 		this.joineddate = user.getJoinedDate();
 	}
 
-	public String getFirstName() {
+	public UserModel(UserDto user) {
+		this.id = user.getUserid();
+		this.username = user.getUsername();
+		this.firstName = user.getFirstname();
+		this.lastName = user.getLastname();
+		this.joineddate = user.getJoineddate();
+		this.profileimage = user.getProfileimage();
+	}
+
+	public String getFirstname() {
 		return firstName;
 	}
 
-	public void setFirstName(String firstName) {
+	public void setFirstname(String firstName) {
 		this.firstName = firstName;
 	}
 
-	public String getLastName() {
+	public String getLastname() {
 		return lastName;
 	}
 
-	public void setLastName(String lastName) {
+	public void setLastname(String lastName) {
 		this.lastName = lastName;
 	}
 

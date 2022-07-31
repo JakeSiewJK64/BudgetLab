@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jakesiewjk64.budgetlab.dto.ErrorResponseDto;
-import com.jakesiewjk64.budgetlab.models.UserModel;
+import com.jakesiewjk64.budgetlab.dto.UserDto;
 import com.jakesiewjk64.budgetlab.services.UserService;
 
 @CrossOrigin(origins = "*")
@@ -39,7 +39,7 @@ public class UserController {
     }
 
     @PostMapping("/upsertUser")
-    public ResponseEntity<?> upsertUser(@RequestBody UserModel user) {
+    public ResponseEntity<?> upsertUser(@RequestBody UserDto user) {
         try {
             return ResponseEntity.ok().body(userService.upsertUser(user));
         } catch (Exception e) {

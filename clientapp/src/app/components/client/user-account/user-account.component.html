@@ -2,12 +2,14 @@
     <h1>My Account</h1>
     <div class="w-100">
         <div fxLayout="row" fxLayoutGap="15" class="profile-section" *ngIf="user">
-            <mat-card class="mat-elevation-z0 w-25 text-center">
+            <mat-card class="mat-elevation-z0 text-center profile-container">
                 <div class="rounded-circle">
-                    <img src="../../../../assets/img/empty.png" alt="profile" style="width: 100px;">
+                    <img (click)="triggerFileUpload()" [src]="file != null ? file : '../../../../assets/img/empty.png'"
+                        class="profile-image-container" alt="profile">
+                    <input type="file" id="file-profile" (change)="promptFileSelect($event)" style="display: none;">
                 </div>
             </mat-card>
-            <mat-card class="mat-elevation-z0 w-75">
+            <mat-card class="mat-elevation-z0 user-details-container">
                 <div fxLayout="column">
                     <div class="flex-row-reverse" fxLayout="row">
                         <div *ngFor="let role of user.role">
@@ -35,6 +37,7 @@
                         <input matInput [(ngModel)]="user.lastname" placeholder="Lastname">
                     </mat-form-field>
                 </div>
+                <button mat-flat-button color="warn" (click)="save()">Save</button>
             </mat-card>
         </div>
     </div>

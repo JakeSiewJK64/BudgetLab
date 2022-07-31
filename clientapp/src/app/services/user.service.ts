@@ -8,7 +8,7 @@ import { URL_ENDPOINT } from './constants/endpoint.constant';
   providedIn: 'root',
 })
 export class UserService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getUsers(id: number): Observable<UserModel> {
     let url = `${URL_ENDPOINT}/user/getUserById/${id}`;
@@ -20,5 +20,17 @@ export class UserService {
       }),
     };
     return this.http.get<UserModel>(url, httpOptions);
+  }
+
+  upsertUsers(user: UserModel): Observable<any> {
+    let url = `${URL_ENDPOINT}/user/upsertUser`;
+    let token = localStorage.getItem('token');
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: token != null ? `Bearer ${token}` : '',
+      }),
+    };
+    return this.http.post<any>(url, user, httpOptions);
   }
 }

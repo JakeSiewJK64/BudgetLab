@@ -1,12 +1,39 @@
+.profile-image-container {
+    width: 100px !important;
+
+}
+
+.profile-image-container:hover {
+    cursor: pointer;
+}
+
 @media only screen and (min-width: 700px) {
     .profile-section {
         flex-direction: row !important;
+    }
+
+    .user-details-container {
+        width: 75% !important;
+    }
+
+    .profile-container {
+        margin: 10px;
+        width: 25% !important;
     }
 }
 
 @media only screen and (max-width: 700px) {
     .profile-section {
         flex-direction: column !important;
+    }
+
+    .user-details-container {
+        width: 100% !important;
+    }
+
+    .profile-container {
+        margin: 10px;
+        width: 100% !important;
     }
 
     .firstlastname-section {

@@ -5,4 +5,5 @@ export interface UserModel {
   lastname: string;
   role: string;
   joineddate: Date;
+  profileimage: string | ArrayBuffer | null | undefined;
 }

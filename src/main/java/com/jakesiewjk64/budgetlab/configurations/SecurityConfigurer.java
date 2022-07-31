@@ -42,6 +42,7 @@ public class SecurityConfigurer {
 
     private final String[] AUTHENTICATED_PATHS = new String[] {
             "/userdashboard",
+            "/user/upsertUser/**",
             "/expense/getExpensesByUserId/**",
             "/expense/getExpenseById/**",
             "/expense/upsertExpense/**",

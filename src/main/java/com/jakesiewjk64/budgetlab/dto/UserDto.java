@@ -14,10 +14,13 @@ public class UserDto {
 	private String[] role;
 	private String firstname;
 	private String lastname;
+	private String profileimage;
 	private Date joineddate;
 
-	public UserDto(String username, long userid, String[] role, String firstname, String lastname, Date joineddate) {
+	public UserDto(String username, long userid, String[] role, String firstname, String lastname, Date joineddate,
+			String profileimage) {
 		this.username = username;
+		this.profileimage = profileimage;
 		this.joineddate = joineddate;
 		this.userid = userid;
 		this.role = role;
@@ -71,6 +74,14 @@ public class UserDto {
 
 	public void setUserid(long userid) {
 		this.userid = userid;
+	}
+
+	public String getProfileimage() {
+		return profileimage;
+	}
+
+	public void setProfileimage(String profileimage) {
+		this.profileimage = profileimage;
 	}
 
 }

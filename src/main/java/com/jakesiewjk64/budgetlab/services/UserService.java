@@ -28,22 +28,25 @@ public class UserService {
     public UserDto getUserById(long id) {
         UserModel user = userDao.get(id).get();
         String[] role = userRoleBridgeRepository.findUserRoleByUserId(id);
-        return new UserDto(user.getUsername(), user.getId(), role, user.getFirstName(), user.getLastName(),
-                user.getJoinedDate());
+        return new UserDto(user.getUsername(), user.getId(), role, user.getFirstname(), user.getLastname(),
+                user.getJoinedDate(), user.getProfileimage());
     }
 
     public UserDto getUserByUsername(String username) {
         UserModel user = userDao.getUserByUsername(username);
         String role[] = userRoleBridgeRepository.findUserRoleByUserId(user.getId());
-        return new UserDto(user.getUsername(), user.getId(), role, user.getFirstName(), user.getLastName(),
-                user.getJoinedDate());
+        return new UserDto(user.getUsername(), user.getId(), role, user.getFirstname(), user.getLastname(),
+                user.getJoinedDate(), user.getProfileimage());
     }
 
     public Collection<UserModel> getAllUsers() {
         return userDao.getAll();
     }
 
-    public int upsertUser(UserModel user) {
-        return userDao.save(user);
+    public int upsertUser(UserDto user) {
+        String password = userDao.get(user.getUserid()).get().getPassword();
+        UserModel usermodel = new UserModel(user);
+        usermodel.setPassword(password);
+        return userDao.save(usermodel);
     }
 }
